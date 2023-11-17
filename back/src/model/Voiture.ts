@@ -6,8 +6,10 @@ export class Voiture {
         public marque: string,
         public modele: string,
         public annee: number,
+        public nombreDePlace: number,
+        public consommation: number,
         public description: string,
         public photo: string,
-        public utilisateur: Utilisateur,
+        public utilisateur: Utilisateur
     ) {}
 }

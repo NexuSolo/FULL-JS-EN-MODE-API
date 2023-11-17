@@ -1,17 +1,15 @@
 import { Covoiturage } from "./Covoiturage";
-import { Voiture } from "./Voiture";
 
 export class Utilisateur {
     constructor(
+        public id: number,
         public nom: string,
         public prenom: string,
         public email: string,
         public password: string,
-        public id?: Number,
-        public photo?: String,
-        public note?: Number,
-        public voiture?: Voiture,
-        public covoiturages?: Covoiturage[],
-        public covoituragesPassager?: Covoiturage[]
+        public note: number[],
+        public covoiturages: Covoiturage[],
+        public covoituragesPassager: Covoiturage[],
+        public photo: string
     ) {}
 }
