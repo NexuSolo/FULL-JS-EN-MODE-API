@@ -1,0 +1,116 @@
+<template>
+
+    <div class="accueil-fenetre">
+        <div class="accueil-content">
+
+            <div class="accueil-texte">
+                <div class="line"></div>
+                <h1>Vroum Vroum</h1>
+                <h3>Le site de covoiturage pour les étudiants de l'EFREI</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> 
+                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+                <a class="bouton-connection" href="">Découvrir les services</a>
+            </div>
+
+
+            <div class="accueil-voiture">
+                <div class="blue-box"></div>
+                <img class="img-car" src="car.png" alt="car">
+            </div>
+
+        </div>
+    </div>
+
+</template>
+
+<script>
+
+export default {
+    name: 'AccueilPresentation',
+    props: {
+        msg: String
+    }
+}
+
+</script>
+
+<style>
+
+.accueil-fenetre{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.accueil-content{
+    display: flex;
+    justify-content: space-around;
+    width: 1200px;
+    margin: auto;
+}
+
+.accueil-texte{
+    margin: auto;
+    width: 600px;
+    text-decoration: none;
+}
+
+.line{
+    width: 25%;
+    height: 2px;
+    background-color: rgb(69, 69, 207);
+    margin-bottom: 20px;
+}
+
+.accueil-texte h1{
+    font-size: 80px;
+    margin: 0;
+    padding: 0;
+}
+
+.accueil-texte h2{
+    font-size: 40px;
+    margin: 0;
+    padding: 0;
+}
+
+.accueil-voiture{
+    margin: auto;
+    width: 600px;
+    height: 600px;
+    text-decoration: none;
+    position: relative;
+}
+
+.blue-box{
+    width: 400px;
+    height: 600px;
+    background-color: rgb(69, 69, 207);
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.img-car{
+    width: 700px;
+    z-index: 2;
+    position: absolute;
+
+}
+
+.bouton-connection{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(69, 69, 207);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.bouton-connection:hover{
+    background-color: rgb(49, 49, 157);
+}
+
+</style>
