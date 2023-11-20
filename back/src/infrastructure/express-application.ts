@@ -55,7 +55,6 @@ export class ExpressApplication {
         if (!port) {
             throw new Error('No port was found in env file.');
         }
-
         return port;
     }
 }
