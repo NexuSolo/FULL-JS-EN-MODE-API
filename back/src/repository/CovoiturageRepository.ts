@@ -12,4 +12,21 @@ export class CovoiturageRepository {
         const result: QueryResult = await pool.query('SELECT * FROM covoiturage WHERE id =' + id);
         return result.rows;
     }
+
+    async postCovoiturage(depart: string, arrive: string, datedepart: Date, datearrivee: Date, prix: number, distance: number){
+        const insertQuery = {
+            text: 'INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance) VALUES ($1, $2, $3, $4, $5, $6)',
+            values: [depart, arrive, datedepart, datearrivee, prix, distance],
+        };
+        await pool.query(insertQuery);
+    }
+
+    async deleteCovoiturage(id: number) {
+        const insertQuery = {
+            text: 'DELETE FROM covoiturage WHERE id = $1',
+            values: [id],
+        };
+        await pool.query(insertQuery);
+    }
+
 }

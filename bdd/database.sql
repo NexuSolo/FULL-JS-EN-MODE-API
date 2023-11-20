@@ -25,17 +25,17 @@ CREATE TABLE Covoiturage (
     dateArrivee TIMESTAMP,
     prix DECIMAL,
     distance DECIMAL,
-    conducteur_id INT REFERENCES Utilisateur(id),
+    conducteur_id INT REFERENCES Utilisateur(id) ON DELETE CASCADE,
     note DECIMAL,
     etat INT
 );
 CREATE TABLE Covoiturage_Utilisateurs (
-    covoiturage_id INT REFERENCES Covoiturage(id),
-    utilisateur_id INT REFERENCES Utilisateur(id),
+    covoiturage_id INT REFERENCES Covoiturage(id) ON DELETE CASCADE,
+    utilisateur_id INT REFERENCES Utilisateur(id) ON DELETE CASCADE,
     PRIMARY KEY (covoiturage_id, utilisateur_id)
 );
 CREATE TABLE NoteUtilisateur (
     id SERIAL PRIMARY KEY,
     valeur DECIMAL,
-    utilisateur_id INT REFERENCES Utilisateur(id)
+    utilisateur_id INT REFERENCES Utilisateur(id) ON DELETE CASCADE
 );
