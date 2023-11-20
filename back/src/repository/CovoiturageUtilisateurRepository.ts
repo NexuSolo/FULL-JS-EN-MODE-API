@@ -7,9 +7,9 @@ let pool = new Pool({
     port: 4545
 });
 
-export class VoitureRepository {
-    async getVoiture(): Promise<any[]> {
-        const result: QueryResult = await pool.query('SELECT * FROM voiture');
+export class CovoiturageUtilisateurRepository {
+    async getCovoiturageUtilisateur(): Promise<any[]> {
+        const result: QueryResult = await pool.query('SELECT * FROM covoiturage_utilisateurs'); 
         return result.rows;
     }    
 }

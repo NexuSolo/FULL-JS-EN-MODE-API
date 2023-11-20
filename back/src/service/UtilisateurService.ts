@@ -1,11 +1,13 @@
 import { Utilisateur } from "../model/Utilisateur";
 import { Voiture } from "../model/Voiture";
-
+import { UtilisateurRepository } from "../repository/UtilisateurRepository";
 
 export class UtilisateurService {
+
     
-    addUtilisateur(nom: string, prenom: string, email: string, password: string): Utilisateur {
-        throw new Error("Method not implemented.");
+    addUtilisateur(nom: string, prenom: string, email: string, password: string) {
+        let utilisateurRepository = new UtilisateurRepository();
+        utilisateurRepository.postUser(nom, prenom, email, password);
     }
 
     connectUtilisateur(email: string, password: string) {
