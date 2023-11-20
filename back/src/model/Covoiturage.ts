@@ -13,6 +13,7 @@ export class Covoiturage {
         public conducteur: Utilisateur,
         public passagers: Utilisateur[],
         public voiture: Voiture,
-        public note: number
+        public note: number,
+        public etat: number //1: pas commencé, 2: en cours, 3: terminé
     ) {}
 }
