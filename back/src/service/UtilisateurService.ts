@@ -7,7 +7,7 @@ export class UtilisateurService {
     
     addUtilisateur(nom: string, prenom: string, email: string, password: string) {
         let utilisateurRepository = new UtilisateurRepository();
-        utilisateurRepository.postUser(nom, prenom, email, password);
+        utilisateurRepository.register(nom, prenom, email, password);
     }
 
     connectUtilisateur(email: string, password: string) {
