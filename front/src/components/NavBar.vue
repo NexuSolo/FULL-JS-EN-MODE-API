@@ -11,7 +11,7 @@
         <a href="">Contact</a>
       </nav>
 
-      <a class="bouton-connection" href="">Se connecter</a>
+      <router-link class="bouton-connection" to="/connection">Se connecter</router-link>
 
     </div>
 

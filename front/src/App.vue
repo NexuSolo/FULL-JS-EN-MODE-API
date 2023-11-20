@@ -1,19 +1,17 @@
 <template>
   <div id="app">
     <NavBar />
-    <AccueilPresentation />
+    <router-view />
   </div>
 </template>
 
 <script>
 import NavBar from './components/NavBar.vue'
-import AccueilPresentation from './components/AccueilPresentation.vue';
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    AccueilPresentation
 }
 }
 </script>
@@ -33,4 +31,21 @@ a {
   text-decoration: none;
   color: #2c3e50;
 }
+
+.bouton-connection{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(69, 69, 207);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.bouton-connection:hover{
+    background-color: rgb(49, 49, 157);
+}
+
+
 </style>
