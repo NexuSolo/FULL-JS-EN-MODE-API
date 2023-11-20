@@ -1,13 +1,15 @@
 import { Utilisateur } from "../model/Utilisateur";
+import { UtilisateurReduit } from "../model/UtilisateurReduit";
 import { Voiture } from "../model/Voiture";
 import { UtilisateurRepository } from "../repository/UtilisateurRepository";
+import { JwtTokenService } from "./JwtTokenService";
 
 export class UtilisateurService {
+    private utilisateurRepository: UtilisateurRepository = new UtilisateurRepository();
+    private jwtTokenService: JwtTokenService = new JwtTokenService();
 
-    
     addUtilisateur(nom: string, prenom: string, email: string, password: string) {
-        let utilisateurRepository = new UtilisateurRepository();
-        utilisateurRepository.register(nom, prenom, email, password);
+        this.utilisateurRepository.register(nom, prenom, email, password);
     }
 
     connectUtilisateur(email: string, password: string) {
