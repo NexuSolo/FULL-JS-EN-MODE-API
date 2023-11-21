@@ -10,16 +10,22 @@ export class UtilisateurRouter {
     }
 
     private configureRoutes(): void {
-        this.router.post('/register', (req, res, next) => {
+        this.router.post('/register', async (req, res, next) => {
             try {
                 const { nom, prenom, email, password } = req.body;
                 if(!nom || !prenom || !email || !password) {
                     throw new Error("Missing arguments");
                 }
                 const result = this.utilisateurController.register(nom, prenom, email, password);
-                res.json(result);
+                if(await result !== null) {
+                    res.json({token: await result});
+                }
+                else {
+                    res.json({error: "Email already used"});
+                }
             }
             catch (error: unknown) {
+                res.json({error: error});
                 next(error);
             }
         });

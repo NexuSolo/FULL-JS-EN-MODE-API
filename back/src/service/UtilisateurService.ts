@@ -11,10 +11,15 @@ export class UtilisateurService {
 
     async addUtilisateur(nom: string, prenom: string, email: string, password: string) {
         const passwordHash = this.passWordHashService.cryptPassword(password);
-        this.utilisateurRepository.register(nom, prenom, email, await passwordHash);
-        const utilisateur: Utilisateur[] = await this.utilisateurRepository.getUtilisateurByEmail(email);
-        const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateur[0].id, utilisateur[0].nom, utilisateur[0].prenom, utilisateur[0].email, utilisateur[0].note, utilisateur[0].covoiturages, utilisateur[0].covoituragesPassager, utilisateur[0].photo);
-        return this.jwtTokenService.generateToken(utilisateurReduit);
+        if((await this.utilisateurRepository.getUtilisateurByEmail(email)).length !== 0) {
+            return null;
+        }
+        this.utilisateurRepository.register(nom, prenom, await passwordHash, email);
+        const u: Utilisateur[] = await this.utilisateurRepository.getUtilisateurByEmail(email);
+        const utilisateur = u[0];
+        const utilisateurReduit: UtilisateurReduit = await new UtilisateurReduit(utilisateur.id, utilisateur.nom, utilisateur.prenom, utilisateur.email, utilisateur.note, utilisateur.covoiturages, utilisateur.covoituragesPassager, utilisateur.photo)
+        const token = this.jwtTokenService.generateToken(utilisateurReduit);
+        return token;
     }
 
     async connectUtilisateur(email: string, password: string) {

@@ -26,7 +26,6 @@ export class UtilisateurRepository {
             values: [name, surname, password, email],
         };
         const res: QueryResult = await pool.query(insertQuery);
-        console.log(res);
         return res.rows;
     }
 
@@ -71,8 +70,7 @@ export class UtilisateurRepository {
     }
 
     async getUtilisateurByEmail(email: string) : Promise<Utilisateur[]> {
-        const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE email = ' + email );
-        console.log(result.rows);
+        const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE email = \'' + email + '\'');
         return result.rows;
     }
 }
