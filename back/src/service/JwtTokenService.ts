@@ -1,12 +1,18 @@
-import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
-import { Utilisateur } from '../model/Utilisateur';
 import { UtilisateurReduit } from '../model/UtilisateurReduit';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 
 export class JwtTokenService {
-
+    private static instance: JwtTokenService;
     private readonly secretKey = crypto.randomBytes(64).toString('hex');
 
+    public static getInstance(): JwtTokenService {
+        if (!JwtTokenService.instance) {
+            JwtTokenService.instance = new JwtTokenService();
+        }
+        return JwtTokenService.instance;
+    }
+    
     generateToken(payload: UtilisateurReduit, expiresIn: string | number = '1h'): string {
         const simplePayload = {
             id: payload.id,
@@ -19,6 +25,7 @@ export class JwtTokenService {
         return jwt.sign(simplePayload, this.secretKey, { expiresIn });
     }
 
+
     verifyToken(token: string): boolean {
         try {
             jwt.verify(token, this.secretKey);
@@ -28,8 +35,18 @@ export class JwtTokenService {
         }
     }
 
-    getUtilisateurFromToken(token: string): UtilisateurReduit {
-        return jwt.decode(token) as UtilisateurReduit;
+    async getUtilisateurIdFromToken(token: string): Promise<number> {
+        try {
+            console.log(token.split(' ')[1])
+            const decodedToken = jwt.verify(token.split(' ')[1], this.secretKey) as JwtPayload;
+            console.log(decodedToken);
+            if (!decodedToken) {
+                throw new Error("Invalid token");
+            }
+            return decodedToken.id;
+        } catch (error) {
+            throw new Error("Invalid token");
+        }
     }
 
 }

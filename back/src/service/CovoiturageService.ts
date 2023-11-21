@@ -8,39 +8,39 @@ export class CovoiturageService {
     private covoiturageRepository: CovoiturageRepository = new CovoiturageRepository();
     private covoiturageUtilisateurRepository: CovoiturageUtilisateurRepository = new CovoiturageUtilisateurRepository();
     private NoteRepository: NoteRepository = new NoteRepository();
-    private jwtTokenService: JwtTokenService = new JwtTokenService();
+    private jwtTokenService: JwtTokenService = JwtTokenService.getInstance();
 
     createCovoiturage(contrat: Covoiturage) {
         this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive,
             contrat.dateDepart, contrat.dateArrivee, contrat.prix, contrat.distance);
     }
 
-    deleteConvoiturage(contrat: Covoiturage, authorization: string) {
-        if(contrat.conducteur.id === this.jwtTokenService.getUtilisateurFromToken(authorization).id){
+    async deleteConvoiturage(contrat: Covoiturage, authorization: string) {
+        if(contrat.conducteur.id === await this.jwtTokenService.getUtilisateurIdFromToken(authorization)){
             this.covoiturageRepository.deleteCovoiturage(contrat.id);
         }else{
             return null;
         }
     }
 
-    desabonnement(contrat: Covoiturage, auth: string) {
-        if(contrat.conducteur.id === this.jwtTokenService.getUtilisateurFromToken(auth).id){
-            this.covoiturageUtilisateurRepository.desabonnement(this.jwtTokenService.getUtilisateurFromToken(auth).id, contrat.id)
+    async desabonnement(contrat: Covoiturage, auth: string) {
+        if(contrat.conducteur.id === await this.jwtTokenService.getUtilisateurIdFromToken(auth)){
+            this.covoiturageUtilisateurRepository.desabonnement(await this.jwtTokenService.getUtilisateurIdFromToken(auth), contrat.id)
         }else{
             return null;
         }
     }
 
-    abonnement(contrat: Covoiturage, auth: string){
-        if(contrat.conducteur.id === this.jwtTokenService.getUtilisateurFromToken(auth).id){
-            this.covoiturageUtilisateurRepository.abonnement(this.jwtTokenService.getUtilisateurFromToken(auth).id, contrat.id)
+    async abonnement(contrat: Covoiturage, auth: string){
+        if(contrat.conducteur.id === await this.jwtTokenService.getUtilisateurIdFromToken(auth)){
+            this.covoiturageUtilisateurRepository.abonnement(await this.jwtTokenService.getUtilisateurIdFromToken(auth), contrat.id)
         }else{
             return null;
         }
     }
 
     async noteCovoiturage(contrat: Covoiturage, auth: string, note: number){
-        if(contrat.conducteur.id != this.jwtTokenService.getUtilisateurFromToken(auth).id
+        if(contrat.conducteur.id != await this.jwtTokenService.getUtilisateurIdFromToken(auth)
             && await this.covoiturageRepository.checkState(contrat.id)){
             this.NoteRepository.noteCovoiturage(contrat.conducteur.id, note)
         }else{

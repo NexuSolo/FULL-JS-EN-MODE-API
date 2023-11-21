@@ -47,38 +47,62 @@ export class UtilisateurRouter {
                 next(error);
             }
         });
-        this.router.get('/:id', (req, res, next) => {
+        this.router.get('/:id', async (req, res, next) => {
             try {
                 const id = parseInt(req.params.id);
                 const result = this.utilisateurController.getUtilisateur(id);
-                res.json(result);
+                if(result === null) {
+                    res.json({error: "User not found"});
+                }
+                if(await result !== null) {
+                    res.json(await result);
+                }
+                else {
+                    res.json({error: "User not found"});
+                
+                }
             }
             catch (error: unknown) {
                 next(error);
             }
         });
-        this.router.patch('/:id', (req, res, next) => {
+        this.router.patch('/', async (req, res, next) => {
             try {
-                const { id, email, password, photo} = req.body;
+                const authorization = req.headers.authorization;
+                const {email, password, photo} = req.body;
 
-                if(!id) {
+                if(!authorization) {
                     throw new Error("Missing arguments");
                 }
 
                 if(email) {
-                    const result = this.utilisateurController.updateEmail(id, email);
-                    res.json(result);
+                    if(await this.utilisateurController.updateEmail(authorization, email)) {
+                        res.json({message: "Email updated"});
+                    }
+                    else {
+                        res.json({error: "Email already used"});
+                    }
                 }
 
                 if(password) {
-                    const result = this.utilisateurController.updatePassword(id, password);
-                    res.json(result);
+                    if(await this.utilisateurController.updatePassword(authorization, password)) {
+                        res.json({message: "Password updated"});
+                    }
+                    else {
+                        res.json({error: "Password not updated"});
+                    }
                 }
 
                 if(photo) {
-                    const result = this.utilisateurController.updatePhoto(id, photo);
-                    res.json(result);
+                    if(await this.utilisateurController.updatePhoto(authorization, photo)) {
+                        res.json({message: "Photo updated"});
+                    }
+                    else {
+                        res.json({error: "Photo not updated"});
+                    }
                 }
+
+                res.json({error: "Missing arguments"});
 
             }
             catch (error: unknown) {

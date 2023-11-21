@@ -12,19 +12,19 @@ export class UtilisateurController {
     }
 
     getUtilisateur(id: number) {
-        this.utilisateurService.getUtilisateur(id)
-    }
-
-    updateEmail(auth: string, email: string) {
-        this.utilisateurService.updateEmailUtilisateur(auth, email)
+        return this.utilisateurService.getUtilisateur(id)
     }
 
     updatePassword(auth: string, password: string) {
-        this.utilisateurService.updatePasswordUtilisateur(auth, password)
+        return this.utilisateurService.updatePasswordUtilisateur(auth, password)
+    }
+
+    updateEmail(auth: string, email: string) {
+        return this.utilisateurService.updateEmailUtilisateur(auth, email)
     }
 
     updatePhoto(auth: string, photo: string) {
-        this.utilisateurService.updatePhotoUtilisateur(auth, photo)
+        return this.utilisateurService.updatePhotoUtilisateur(auth, photo)
     }
     
 }

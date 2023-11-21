@@ -6,7 +6,7 @@ import { PasswordCryptageService } from "./PasswordCryptageService";
 
 export class UtilisateurService {
     private utilisateurRepository: UtilisateurRepository = new UtilisateurRepository();
-    private jwtTokenService: JwtTokenService = new JwtTokenService();
+    private jwtTokenService: JwtTokenService = JwtTokenService.getInstance();
     private passWordHashService: PasswordCryptageService = new PasswordCryptageService();
 
     async addUtilisateur(nom: string, prenom: string, email: string, password: string) {
@@ -42,32 +42,38 @@ export class UtilisateurService {
         }
     }
 
-    getUtilisateur(id: number) {
-        this.utilisateurRepository.getUser(id);
+    async getUtilisateur(id: number) {
+        const users = await this.utilisateurRepository.getUser(id);
+        if(users.length === 0) {
+            return null;
+        }
+        return new UtilisateurReduit(users[0].id, users[0].nom, users[0].prenom, users[0].email, users[0].note, users[0].covoiturages, users[0].covoituragesPassager, users[0].photo);
     }
 
     async updatePasswordUtilisateur(auth: string, password: string) {
-        if((await this.utilisateurRepository.getUser(this.jwtTokenService.getUtilisateurFromToken(auth).id)).length === 0) {
+        if((await this.utilisateurRepository.getUser(await this.jwtTokenService.getUtilisateurIdFromToken(auth))).length === 0) {
             return false;
         }
         const passwordHash = this.passWordHashService.cryptPassword(password);
-        this.utilisateurRepository.updatePasswordUtilisateur(this.jwtTokenService.getUtilisateurFromToken(auth).id,await passwordHash);
+        this.utilisateurRepository.updatePasswordUtilisateur(await this.jwtTokenService.getUtilisateurIdFromToken(auth),await passwordHash);
         return true;
     }
 
     async updateEmailUtilisateur(auth: string, email: string) {
-        if((await this.utilisateurRepository.getUtilisateurByEmail(email)).length !== 0) {
+        const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth)
+        console.log(id)
+        if((await this.utilisateurRepository.getUser(id)).length === 0) {
             return false;
         }
-        this.utilisateurRepository.patchUser(this.jwtTokenService.getUtilisateurFromToken(auth).id, undefined, email, undefined);
+        this.utilisateurRepository.patchUser(await this.jwtTokenService.getUtilisateurIdFromToken(auth), undefined, email, undefined);
         return true;
     }
 
     async updatePhotoUtilisateur(auth: string, photo: string) {
-        if((await this.utilisateurRepository.getUser(this.jwtTokenService.getUtilisateurFromToken(auth).id)).length === 0) {
+        if((await this.utilisateurRepository.getUser(await this.jwtTokenService.getUtilisateurIdFromToken(auth))).length === 0) {
             return false;
         }
-        this.utilisateurRepository.patchUser(this.jwtTokenService.getUtilisateurFromToken(auth).id, undefined, undefined, photo);
+        this.utilisateurRepository.patchUser(await this.jwtTokenService.getUtilisateurIdFromToken(auth), undefined, undefined, photo);
         return true;
     }
 
