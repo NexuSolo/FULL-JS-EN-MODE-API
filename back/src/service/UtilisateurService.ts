@@ -34,19 +34,32 @@ export class UtilisateurService {
     }
 
     getUtilisateur(id: number) {
-        throw new Error("Method not implemented.");
+        this.utilisateurRepository.getUser(id);
     }
 
-    updatePasswordUtilisateur(auth: string, password: string) {
-        throw new Error("Method not implemented.");
+    async updatePasswordUtilisateur(auth: string, password: string) {
+        if((await this.utilisateurRepository.getUser(this.jwtTokenService.getUtilisateurFromToken(auth).id)).length === 0) {
+            return false;
+        }
+        const passwordHash = this.passWordHashService.cryptPassword(password);
+        this.utilisateurRepository.updatePasswordUtilisateur(this.jwtTokenService.getUtilisateurFromToken(auth).id,await passwordHash);
+        return true;
     }
 
-    updateEmailUtilisateur(auth: string, email: string) {
-        throw new Error("Method not implemented.");
+    async updateEmailUtilisateur(auth: string, email: string) {
+        if((await this.utilisateurRepository.getUtilisateurByEmail(email)).length !== 0) {
+            return false;
+        }
+        this.utilisateurRepository.patchUser(this.jwtTokenService.getUtilisateurFromToken(auth).id, undefined, email, undefined);
+        return true;
     }
 
-    updatePhotoUtilisateur(auth: string, photo: string) {
-        throw new Error("Method not implemented.");
+    async updatePhotoUtilisateur(auth: string, photo: string) {
+        if((await this.utilisateurRepository.getUser(this.jwtTokenService.getUtilisateurFromToken(auth).id)).length === 0) {
+            return false;
+        }
+        this.utilisateurRepository.patchUser(this.jwtTokenService.getUtilisateurFromToken(auth).id, undefined, undefined, photo);
+        return true;
     }
 
 }

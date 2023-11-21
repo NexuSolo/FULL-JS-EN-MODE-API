@@ -15,7 +15,7 @@ export class UtilisateurRepository {
         return result.rows;
     }
 
-    async getUser(authorization: string, id: number): Promise<any[]> {
+    async getUser(id: number): Promise<any[]> {
         const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE id = ' + id);
         return result.rows;
     }
@@ -37,7 +37,7 @@ export class UtilisateurRepository {
         await pool.query(insertQuery);
     }
 
-    async patchUser(authorization: string, id: number, name?: string, email?: string, photo?: string) {
+    async patchUser(id: number, name?: string, email?: string, photo?: string) {
         const setValues: string[] = [];
         const queryValues: (string | number)[] = [id];
     
@@ -72,5 +72,13 @@ export class UtilisateurRepository {
     async getUtilisateurByEmail(email: string) : Promise<Utilisateur[]> {
         const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE email = \'' + email + '\'');
         return result.rows;
+    }
+
+    async updatePasswordUtilisateur(id: number, password: string) {
+        const insertQuery = {
+            text: 'UPDATE utilisateur SET password = $2 WHERE id = $1',
+            values: [id, password],
+        };
+        await pool.query(insertQuery);
     }
 }
