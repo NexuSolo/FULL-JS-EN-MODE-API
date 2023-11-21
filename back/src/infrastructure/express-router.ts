@@ -5,6 +5,7 @@ import { CovoiturageController } from '../controller/CovoiturageController';
 import { CovoiturageRouter } from '../router/CovoiturageRouter';
 import { UtilisateurService } from '../service/UtilisateurService';
 import { CovoiturageService } from '../service/CovoiturageService';
+import { authMiddleware } from '../config/authMiddleware';
 
 export class ExpressRouter {
     router = Router();
@@ -22,7 +23,7 @@ export class ExpressRouter {
 
     private configureControllers(): void {
         this.UtilisateurController = new UtilisateurController(this.userService);
-        this.CovoiturageController = new CovoiturageController(this.covoiturageService);
+        this.CovoiturageController = new CovoiturageController();
     }
 
     private configureRouters(): void {
@@ -31,7 +32,9 @@ export class ExpressRouter {
     }
 
     private configureRoutes(): void {
-        this.router.use('/utilisateur', this.UtilisateurRouter.router);
+        this.router.use(authMiddleware);
+        this.router.use('/covoiturages', this.CovoiturageRouter.router);
         this.router.use('/covoiturage', this.CovoiturageRouter.router);
+        this.router.use('/utilisateur', this.UtilisateurRouter.router);
     }
 }

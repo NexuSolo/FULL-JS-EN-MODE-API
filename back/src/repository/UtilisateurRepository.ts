@@ -1,4 +1,5 @@
 import { Pool, QueryResult } from 'pg';
+import { Utilisateur } from '../model/Utilisateur';
 require('dotenv').config();
 let pool = new Pool({
     user: process.env.DB_USER,
@@ -25,6 +26,8 @@ export class UtilisateurRepository {
             values: [name, surname, password, email],
         };
         const res: QueryResult = await pool.query(insertQuery);
+        console.log(res);
+        return res.rows;
     }
 
     async deleteUser(authorization: string, id: number) {
@@ -67,12 +70,9 @@ export class UtilisateurRepository {
 
     }
 
-    async login(email: string, password: string){
-        const insertQuery = {
-            text: 'SELECT FROM utilisateur * WHERE email = $1 AND password = $2)',
-            values: [email, password],
-        };
-        const res: QueryResult = await pool.query(insertQuery);
-        return res.rows;
+    async getUtilisateurByEmail(email: string) : Promise<Utilisateur[]> {
+        const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE email = ' + email );
+        console.log(result.rows);
+        return result.rows;
     }
 }
