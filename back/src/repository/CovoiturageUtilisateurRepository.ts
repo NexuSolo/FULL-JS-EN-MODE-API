@@ -13,20 +13,18 @@ export class CovoiturageUtilisateurRepository {
         return result.rows;
     }
     
-    async abonnement(id: number){
-        const token = 1;
+    async abonnement(auth_id: number, id: number){
         const insertQuery = {
             text: 'INSERT INTO covoiturage_utilisateur (covoiturage_id, utilisateur_id) VALUES ($1, $2)',
-            values: [id, token],
+            values: [id, auth_id],
         };
         await pool.query(insertQuery);
     }
 
-    async desabonnement(id: number){
-        const token = 1;
+    async desabonnement(auth_id: number, id: number){
         const insertQuery = {
             text: 'DELETE FROM covoiturage_utlisateur WHERE utilisateur_id = $1',
-            values: [id, token],
+            values: [id, auth_id],
         };
         await pool.query(insertQuery);
     }

@@ -29,4 +29,16 @@ export class CovoiturageRepository {
         await pool.query(insertQuery);
     }
 
+    async checkState(id: number) {
+        const insertQuery = {
+            text: 'SELECT FROM covoiturage WHERE id = $1 AND state = 3',
+            values: [id],
+        };
+        const res = await pool.query(insertQuery);
+        if(res.rows.length === 0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

@@ -8,7 +8,7 @@ let pool = new Pool({
 });
 
 export class NoteRepository {
-    async postNote(id: number, note: number) {
+    async noteCovoiturage(id: number, note: number) {
         const insertQuery = {
             text: 'INSERT INTO covoiturage (valeur, utilisateur_id) VALUES ($1, $2)',
             values: [note, id],
