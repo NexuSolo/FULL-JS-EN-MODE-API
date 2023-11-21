@@ -8,7 +8,7 @@ export class UtilisateurController {
     }
 
     login(email: string, password: string) {
-        this.utilisateurService.connectUtilisateur(email, password)
+        return this.utilisateurService.connectUtilisateur(email, password)
     }
 
     getUtilisateur(id: number) {
