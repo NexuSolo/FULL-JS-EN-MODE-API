@@ -25,11 +25,20 @@ export class UtilisateurService {
     async connectUtilisateur(email: string, password: string) {
         const utilisateurs: Utilisateur[] = await this.utilisateurRepository.getUtilisateurByEmail(email);
         if (utilisateurs.length === 0) {
-            return false;
+            return null;
         }
-        if(await this.passWordHashService.comparePasswords(password, utilisateurs[0].password)) {
-            const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateurs[0].id, utilisateurs[0].nom, utilisateurs[0].prenom, utilisateurs[0].email, utilisateurs[0].note, utilisateurs[0].covoiturages, utilisateurs[0].covoituragesPassager, utilisateurs[0].photo);
-            return this.jwtTokenService.generateToken(utilisateurReduit);
+        try {
+            if(await this.passWordHashService.comparePasswords(password, utilisateurs[0].password)) {
+                const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateurs[0].id, utilisateurs[0].nom, utilisateurs[0].prenom, utilisateurs[0].email, utilisateurs[0].note, utilisateurs[0].covoiturages, utilisateurs[0].covoituragesPassager, utilisateurs[0].photo);
+                const mdp = this.jwtTokenService.generateToken(utilisateurReduit);
+                return mdp;
+            }
+            else {
+                return null;
+            }
+        }
+        catch (error: unknown) {
+            console.log(error);
         }
     }
 

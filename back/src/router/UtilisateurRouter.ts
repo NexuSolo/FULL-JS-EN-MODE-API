@@ -29,14 +29,19 @@ export class UtilisateurRouter {
                 next(error);
             }
         });
-        this.router.post('/login', (req, res, next) => {
+        this.router.post('/login', async (req, res, next) => {
             try {
                 const { email, password } = req.body;
                 if(!email || !password) {
                     throw new Error("Missing arguments");
                 }
                 const result = this.utilisateurController.login(email, password);
-                res.json(result);
+                if(await result !== null) {
+                    res.json({token: await result});
+                }
+                else {
+                    res.json({error: "Email or password incorrect"});
+                }
             }
             catch (error: unknown) {
                 next(error);
