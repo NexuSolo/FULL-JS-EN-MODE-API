@@ -15,4 +15,21 @@ export class NoteRepository {
         };
         await pool.query(insertQuery);
     }
+
+    async checkAlreadyRated(id: number, id_covoiturage: number){
+        const insertQuery = {
+            text: 'SELECT * FROM NoteUtilisateur WHERE rater = $1 AND covoiturage_id = $2',
+            values: [id, id_covoiturage],
+        };
+        const result: QueryResult = await pool.query(insertQuery);
+        return result.rows;
+    }
+
+    async getAllNotes(id: number){
+        const insertQuery = {
+            text: 'SELECT NoteUtilisateur.valeur FROM NoteUtilisateur JOIN Covoiturage ON NoteUtilisateur.covoiturage_id = Covoiturage.id JOIN Utilisateur ON NoteUtilisateur.id_rater = Utilisateur.id WHERE Utilisateur.id = $1',
+            values: [id],
+        };
+        return await pool.query(insertQuery);
+    }
 }

@@ -28,4 +28,14 @@ export class CovoiturageUtilisateurRepository {
         };
         await pool.query(insertQuery);
     }
+
+    async checkPassengerCourse(auth_id: number, id: number){
+        const insertQuery = {
+            text: 'SELECT * FROM covoiturage_utlisateur WHERE utilisateur_id = $1 AND covoiturage_id = $2',
+            values: [id, auth_id],
+        };
+        const result: QueryResult = await pool.query(insertQuery);
+        return result.rows;
+    }
+
 }

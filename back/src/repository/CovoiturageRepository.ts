@@ -13,10 +13,12 @@ export class CovoiturageRepository {
         return result.rows;
     }
 
-    async postCovoiturage(depart: string, arrive: string, datedepart: Date, datearrivee: Date, prix: number, distance: number){
+    async postCovoiturage(depart: string, arrive: string, datedepart: Date, datearrivee: Date, 
+        prix: number, distance: number ,marque: string, modele: string, 
+        nbPlace:number, description?:string, photo?:string) {
         const insertQuery = {
-            text: 'INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance) VALUES ($1, $2, $3, $4, $5, $6)',
-            values: [depart, arrive, datedepart, datearrivee, prix, distance],
+            text: 'INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance, etat, marque, modele, nbPlace, description, photo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
+            values: [depart, arrive, datedepart, datearrivee, prix, distance, 1, marque, modele, nbPlace, description, photo],
         };
         await pool.query(insertQuery);
     }
