@@ -9,7 +9,7 @@
                 <h3>Le site de covoiturage pour les étudiants de l'EFREI</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> 
                 Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-                <a class="bouton-connection" href="">Découvrir les services</a>
+                <a class="decouvrir-button" href="">Découvrir les services</a>
             </div>
 
 
@@ -110,6 +110,21 @@ export default {
 }
 
 .bouton-connection:hover{
+    background-color: rgb(49, 49, 157);
+}
+
+.decouvrir-button{
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: rgb(69, 69, 207);
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+    margin-top: 20px;
+    margin-bottom: auto;
+}
+
+.decouvrir-button:hover{
     background-color: rgb(49, 49, 157);
 }
 

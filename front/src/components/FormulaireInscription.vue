@@ -2,14 +2,16 @@
 
     <div class="connection-fenetre">
         <div class="wrapper">
-            <div class="container">
-                <h1>Connection</h1>
+            <div class="container-inscription">
+                <h1>Inscription</h1>
                 <form class="form">
+                    <input type="text" placeholder="Nom" id="nom" name="nom">
+                    <input type="text" placeholder="Prénom" id="prenom" name="prenom">
                     <input type="text" placeholder="Email" id="email" name="email">
                     <input type="password" placeholder="Mot de passe" id="mdp" name="mdp">
-                    <button type="submit" id="login-button">Se connecter</button>
+                    <button type="submit" id="login-button">S'inscrire</button>
                 </form>
-                <router-link class="bouton-inscription" to="/inscription">S'inscrire</router-link>
+                <router-link class="bouton-inscription" to="/connection">Se connecter</router-link>
             </div>
         </div>
     </div>
@@ -24,6 +26,8 @@ export default {
         msg: String
     }
 }
+
+
 
 
 </script>
@@ -96,14 +100,15 @@ body :-ms-input-placeholder {
 .wrapper.form-success .container h1 {
   transform: translateY(85px);
 }
-.container {
+.container-inscription {
   max-width: 600px;
   margin: 0 auto;
   padding: 80px 0;
   height: 400px;
   text-align: center;
+  margin-top: -45px;
 }
-.container h1 {
+.container-inscription h1 {
   font-size: 40px;
   transition-duration: 1s;
   transition-timing-function: ease-in-put;
