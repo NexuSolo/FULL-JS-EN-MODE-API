@@ -4,14 +4,32 @@ import { CovoiturageService } from "../service/CovoiturageService";
 export class CovoiturageController {
     private covoiturageService: CovoiturageService = new CovoiturageService(); 
 
-    noteContrat(contrat: Covoiturage, note: number, authorization: string){
+    async addCovoiturage(authorization: string, contrat: Covoiturage) {
+        return this.covoiturageService.createCovoiturage(authorization, contrat);
+    }
 
+    async getCovoiturage(id: number) {
+        return this.covoiturageService.getCovoiturage(id);
     }
-    desabonnement(contrat: Covoiturage, authorization: string) {
-        this.covoiturageService.desabonnement(contrat, authorization);
+
+    async deleteCovoiturage(authorization: string, id: number) {
+        return this.covoiturageService.deleteConvoiturage(authorization, id);
     }
-    deleteConvoiturage(contrat: Covoiturage, authorization: string) {
-        this.covoiturageService.deleteConvoiturage(contrat, authorization);
+
+    async desabonnement(authorization: string, id: number) {
+        return this.covoiturageService.desabonnement(authorization, id);
+    }
+
+    async abonnement(authorization: string, id: number){
+        return this.covoiturageService.abonnement(authorization, id);
+    }
+
+    async noteCovoiturage(authorization: string, id: number, note: number){
+        return this.covoiturageService.noteCovoiturage(authorization, id, note);
+    }
+
+    async getAllCovoiturages() {
+        return this.covoiturageService.getAllCovoiturages();
     }
 
 }

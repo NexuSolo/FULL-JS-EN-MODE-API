@@ -10,7 +10,7 @@ export class CovoiturageService {
     private NoteRepository: NoteRepository = new NoteRepository();
     private jwtTokenService: JwtTokenService = JwtTokenService.getInstance();
 
-    createCovoiturage(contrat: Covoiturage) {
+    createCovoiturage(authorization: string, contrat: Covoiturage) {
         this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive,
             contrat.dateDepart, contrat.dateArrivee, contrat.prix, contrat.distance);
     }
