@@ -3,25 +3,18 @@ import { JwtTokenService } from "./JwtTokenService";
 import { CovoiturageRepository } from "../repository/CovoiturageRepository";
 import { CovoiturageUtilisateurRepository } from "../repository/CovoiturageUtilisateurRepository";
 import { NoteRepository } from "../repository/NoteRepository";
-import { Voiture } from "../model/Voiture";
+import { UtilisateurService } from "../service/UtilisateurService";
 
 export class CovoiturageService {
     private covoiturageRepository: CovoiturageRepository = new CovoiturageRepository();
     private covoiturageUtilisateurRepository: CovoiturageUtilisateurRepository = new CovoiturageUtilisateurRepository();
+    private utilisateurService: UtilisateurService = new UtilisateurService();
     private NoteRepository: NoteRepository = new NoteRepository();
     private jwtTokenService: JwtTokenService = JwtTokenService.getInstance();
 
-    createCovoiturage(contrat: Covoiturage, voiture: Voiture) {
-        let description = '';
-        let photo = '';
-        if (voiture.description === undefined) {
-            description = '';
-        }
-        if (voiture.photo === undefined) {
-            photo = '';
-        }
-        this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive,
-            contrat.dateDepart, contrat.dateArrivee, contrat.prix, contrat.distance, voiture.marque, voiture.modele, voiture.nombreDePlace, voiture.description, voiture.photo);
+    async createCovoiturage(authorization: string, contrat: Covoiturage) {
+        const idUser = await this.jwtTokenService.getUtilisateurIdFromToken(authorization);
+        const covoiturage = this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive, contrat.dateDepart, contrat.dateArrivee, contrat.prix, 0, contrat.voiture.marque, contrat.voiture.modele, contrat.voiture.nombreDePlace, contrat.voiture.description, contrat.voiture.photo);
     }
 
     async deleteConvoiturage(contrat: Covoiturage, authorization: string) {
