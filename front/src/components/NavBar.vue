@@ -43,7 +43,7 @@ export default {
     mounted() {
         const user = getCurrentInstance().appContext.config.globalProperties.user;
         console.log("User : " + user); // Affiche 'none' dans la console
-        if (user == "") {
+        if (user != "") {
             // rendre no-user visible
             document.querySelector(".no-user").style.display = "block";
             document.querySelector(".user").style.display = "none";
