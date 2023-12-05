@@ -6,6 +6,9 @@
             <div class="trajet-depart">
                 {{ trajet.depart }}
             </div>
+            <div class="to">
+                <img class="fleche" src="fleche.png">
+            </div>
             <div class="trajet-arrivee">  
                 {{ trajet.arrivee }}
             </div>
@@ -60,14 +63,21 @@
         </div>
 
         <div class="infos">
-            <div class="distance">
-                {{ trajet.distance }}
+            <div class="infos-left">
+                <div class="trajet-distance">
+                    <p><span class="titre-detail">Distance : </span>{{ trajet.distance }}</p>
+                </div>
+                <div class="trajet-duree">
+                    <p><span class="titre-detail">Durée : </span>{{ trajet.duree }}</p>
+                </div>
+                <div class="trajet-prix">
+                    <p><span class="titre-detail">Prix : </span>{{ trajet.prix }}</p>
+                </div>
             </div>
-            <div class="duree">
-                {{ trajet.duree }}
-            </div>
-            <div class="prix">
-                {{ trajet.prix }}
+
+            <div class="infos-right">
+                <a v-if="trajet.etat === 'disponible'" class="check-trajet" href="">Choisir ce trajet</a>
+                <p v-else-if="trajet.etat === 'termine'" class="termine-trajet" href="">Trajet terminé</p>
             </div>
         </div>
 
@@ -88,7 +98,8 @@ export default {
                 arrivee: "Marseille",
                 distance: "800km",
                 duree: "8h",
-                prix: "50€"
+                prix: "50€",
+                etat: "disponible"
             },
 
             conducteur : {
@@ -124,9 +135,65 @@ export default {
 
 <style>
 
+.infos-right{
+    display: flex;
+    align-items: center;
+}
+
+.check-trajet{
+    background-color: rgb(141, 206, 122);
+    margin: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    padding: 20px;
+    transition: 0.2s;
+}
+
+.termine-trajet{
+    background-color: rgb(170, 170, 170);
+    margin: 20px;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+    padding: 20px;
+    transition: 0.2s;
+}
+
+.check-trajet:hover{
+    background-color: rgb(141, 218, 118);
+}
+
+.titre-detail{
+    font-weight: bold;
+}
+
+.trajet-distance, .trajet-duree, .trajet-prix{
+    font-size: 20px;
+    margin: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    background-color: rgb(170, 170, 170);
+}
+
+.infos{
+    margin-top: 30px;
+    background-color: rgb(211, 211, 211);
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
 .passagers-liste{
     width: 1000px;
     margin-top: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .passager{
@@ -134,15 +201,13 @@ export default {
     display: flex;
     align-items: center;
     background-color: rgb(211, 211, 211);
-    width: 40%;
     margin-bottom: 20px;
+    width: 400px;
 }
 
 .passager-photo img{
     width: 150px;
 }
-
-
 
 .trajet-fenetre{
     width: 1000px; 
@@ -157,6 +222,15 @@ export default {
     height: 200px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.to{
+    margin: auto;
+}
+
+.fleche{
+    width: 100px;
+    height: 100px;
 }
 
 .trajet-depart, .trajet-arrivee{
