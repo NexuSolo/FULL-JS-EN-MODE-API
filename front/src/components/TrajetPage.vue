@@ -1,7 +1,5 @@
 <template>
     <div class="trajet-fenetre">
-        
-
         <div class="adresses">
             <div class="trajet-depart">
                 {{ trajet.depart }}
@@ -13,10 +11,7 @@
                 {{ trajet.arrivee }}
             </div>
         </div>
-
-
         <h2>Conducteur</h2>
-
         <div class="conducteur">
             <div class="conducteur-info">
                 <div class="conducteur-photo">

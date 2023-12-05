@@ -19,6 +19,22 @@
             </div>
 
         </div>
+
+
+
+        <form class="search-bar"  action="POST">
+            <div class="search-depart">
+                <input type="text" name="" id="" placeholder="Départ">
+            </div>
+            <div class="search-arrivee">
+                <input type="text" name="" id="" placeholder="Destination">
+            </div>
+            <div class="search-button">
+                <a href="/" type="submit"><img src="search.png" alt="" width="30px"></a>
+            </div>
+        </form> 
+
+       
     </div>
 
 </template>
@@ -35,6 +51,33 @@ export default {
 </script>
 
 <style>
+
+
+.search-bar{
+    display: flex;
+    justify-content: space-around;
+    width: 800px;
+    margin: auto;
+    margin-top: 100px;
+    background-color: rgb(211, 211, 211);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.search-bar input{
+    width: 300px;
+    height: 50px;
+    border-radius: 5px;
+    border: none;
+    font-size: 20px;
+    margin-right: 20px;
+    margin-top : auto;
+    margin-bottom: auto;
+}
+
+.search-button{
+    margin: auto;
+}
 
 .accueil-fenetre{
     margin: 0;
