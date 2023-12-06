@@ -26,15 +26,44 @@
             <div class="search-depart">
                 <input type="text" name="" id="" placeholder="Départ">
             </div>
+            <div class="search-fleche">
+                <img src="fleche.png" alt="" width="30px">
+            </div>
             <div class="search-arrivee">
                 <input type="text" name="" id="" placeholder="Destination">
+            </div>
+            <div class="search-date">
+                <input type="date" name="" id="">
+            </div>
+            <div class="search-prix">
+                <input type="number" name="" id="" placeholder="Prix">
             </div>
             <div class="search-button">
                 <a href="/" type="submit"><img src="search.png" alt="" width="30px"></a>
             </div>
         </form> 
 
-       
+
+        <div class="liste-trajets">
+            <div class="titre-trajets">
+                <h3>Date</h3>
+                <h3>Départ</h3>
+                <h3>Arrivée</h3>
+                <h3>Places</h3>
+                <h3>Prix</h3>
+            </div>
+            <div v-for="(trajet, index) in trajets" :key="index">
+                <router-link class="plus" to="/trajet">
+                    <div class="trajet">
+                        <div class="date">{{ trajet.date }}</div>
+                        <div class="depart">{{ trajet.depart }}</div>
+                        <div class="arrivee">{{ trajet.arrivee }}</div>
+                        <div class="distance">{{ trajet.places }}</div>
+                        <div class="prix">{{ trajet.prix }}</div>
+                    </div>
+                </router-link>
+            </div>
+        </div> 
     </div>
 
 </template>
@@ -45,18 +74,109 @@ export default {
     name: 'AccueilPresentation',
     props: {
         msg: String
-    }
+    },
+    data() {
+        return {
+            trajets: [
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                },
+                {
+                    depart: "Paris",
+                    arrivee: "Lyon",
+                    date: "12/12/2020",
+                    prix: "20€",
+                    places: "2",
+                    etat: "disponible"
+                }
+            ]
+
+        }
+    },
+
 }
 
 </script>
 
 <style>
 
+.titre-trajets{
+    display: flex;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 20px;
+}
+
+.titre-trajets h3{
+    font-weight: bold;
+}
+
+.liste-trajets{
+    width: 1200px;
+    margin: auto;
+}
 
 .search-bar{
     display: flex;
     justify-content: space-around;
-    width: 800px;
+    width: 1200px;
     margin: auto;
     margin-top: 100px;
     background-color: rgb(211, 211, 211);
@@ -65,7 +185,7 @@ export default {
 }
 
 .search-bar input{
-    width: 300px;
+    width: 200px;
     height: 50px;
     border-radius: 5px;
     border: none;
@@ -73,6 +193,12 @@ export default {
     margin-right: 20px;
     margin-top : auto;
     margin-bottom: auto;
+}
+
+.search-fleche{
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 20px;
 }
 
 .search-button{

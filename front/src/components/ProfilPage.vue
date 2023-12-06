@@ -15,7 +15,6 @@
 
         <div class="historique-trajets">
             <h2>Historique de trajets</h2>
-            <div class="liste-trajets"></div>
             <div v-for="(trajet, index) in trajets" :key="index">
                 <router-link class="plus" to="/trajet">
                     <div class="trajet">
