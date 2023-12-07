@@ -32,7 +32,7 @@
 
 
 
-<script>
+<script scoped>
 import { getCurrentInstance } from 'vue'
 
 export default {

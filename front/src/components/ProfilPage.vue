@@ -120,7 +120,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .profil-presentation{
     margin: auto;

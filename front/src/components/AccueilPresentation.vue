@@ -20,8 +20,6 @@
 
         </div>
 
-
-
         <form class="search-bar"  action="POST">
             <div class="search-depart">
                 <input type="text" name="" id="" placeholder="Départ">
@@ -151,7 +149,55 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
+form input {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  outline: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.2);
+  width: 250px;
+  border-radius: 3px;
+  padding: 10px 15px;
+  margin: 0 auto 10px auto;
+  display: block;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  transition-duration: 0.25s;
+  font-weight: 300;
+}
+form input:hover {
+  background-color: rgba(255, 255, 255, 0.4);
+}
+form input:focus {
+  background-color: white;
+  width: 300px;
+  color: rgb(121, 121, 233);
+}
+.trajet{
+    width: 90%;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(235, 235, 235) ;
+    border-radius: 10px;
+}
+
+.trajet div{
+    width: 20%;
+    text-align: center;
+    font-size: 20px;
+
+}
 
 .titre-trajets{
     display: flex;
@@ -169,7 +215,7 @@ export default {
 }
 
 .liste-trajets{
-    width: 1200px;
+    width: 1000px;
     margin: auto;
 }
 

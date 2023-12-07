@@ -50,7 +50,7 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 
 .create-trajet-fenetre input{
     height: 30px;
