@@ -5,13 +5,15 @@ import FormulaireConnection from './components/FormulaireConnection.vue'
 import FormulaireInscription from './components/FormulaireInscription.vue'
 import ProfilPage from './components/ProfilPage.vue'
 import TrajetPage from './components/TrajetPage.vue'
+import CreateTrajet from './components/CreateTrajet.vue'
 
 const routes = [
     { path: '/', component: AccueilPresentation },
     { path: '/connection', component: FormulaireConnection },
     { path: '/inscription', component: FormulaireInscription },
     { path: '/profil', component: ProfilPage },
-    { path: '/trajet', component: TrajetPage}
+    { path: '/trajet', component: TrajetPage },
+    { path: '/create-trajet', component: CreateTrajet }
 ]
 
 const router = createRouter({
