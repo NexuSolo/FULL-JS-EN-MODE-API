@@ -67,7 +67,6 @@
 </template>
 
 <script>
-
 export default {
     name: 'AccueilPresentation',
     props: {
