@@ -72,6 +72,24 @@ export default {
     props: {
         msg: String
     },
+    
+    async mounted() {
+        this.users = await this.getAllUsers();
+    },
+    methods: {
+        async getAllUsers() {
+            try {
+                const response = await fetch("http://localhost:8080/api/utilisateur");
+                if (!response.ok) {
+                console.error('HTTP error', response.status);
+                } else {
+                return await response.json();
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        },
+    },
     data() {
         return {
             trajets: [

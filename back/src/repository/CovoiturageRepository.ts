@@ -43,4 +43,9 @@ export class CovoiturageRepository {
             return true;
         }
     }
+
+    async getAllCovoiturages() {
+        const result: QueryResult = await pool.query('SELECT * FROM covoiturage WHERE state = 1');
+        return result.rows;
+    }
 }

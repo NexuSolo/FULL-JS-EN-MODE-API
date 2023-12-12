@@ -65,6 +65,24 @@ export class UtilisateurRouter {
                 next(error);
             }
         });
+        this.router.get('/', async (req, res, next) => {
+            try {
+                const result = this.utilisateurController.getUtilisateurs();
+                if(result === null) {
+                    res.json({error: "User not found"});
+                }
+                if(await result !== null) {
+                    res.json(await result);
+                }
+                else {
+                    res.json({error: "User not found"});
+                
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
         this.router.patch('/', async (req, res, next) => {
             try {
                 const authorization = req.headers.authorization;
