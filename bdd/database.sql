@@ -21,7 +21,7 @@ CREATE TABLE Covoiturage (
     modele VARCHAR(255) NOT NULL,
     nombreDePlace INT NOT NULL,
     description TEXT,
-    photo VARCHAR(255),
+    photo VARCHAR(255)
 );
 CREATE TABLE Covoiturage_Utilisateurs (
     covoiturage_id INT REFERENCES Covoiturage(id) NOT NULL,

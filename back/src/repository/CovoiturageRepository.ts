@@ -27,11 +27,6 @@ export class CovoiturageRepository {
         return result.rows[0];
     }
 
-    async getAllCovoiturages(): Promise<any[]> {
-        const result: QueryResult = await pool.query('SELECT * FROM covoiturage');
-        return result.rows;
-    }
-
     async deleteCovoiturage(id: number) {
         const insertQuery = {
             text: 'DELETE FROM covoiturage WHERE id = $1',
@@ -42,7 +37,7 @@ export class CovoiturageRepository {
 
     async checkState(id: number) {
         const insertQuery = {
-            text: 'SELECT FROM covoiturage WHERE id = $1 AND state = 3',
+            text: 'SELECT FROM covoiturage WHERE id = $1 AND etat = 3',
             values: [id],
         };
         const res = await pool.query(insertQuery);
@@ -54,7 +49,7 @@ export class CovoiturageRepository {
     }
 
     async getAllCovoiturages() {
-        const result: QueryResult = await pool.query('SELECT * FROM covoiturage WHERE state = 1');
+        const result: QueryResult = await pool.query('SELECT * FROM covoiturage WHERE etat = 1');
         return result.rows;
     }
 }

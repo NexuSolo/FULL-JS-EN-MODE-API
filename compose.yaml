@@ -1,0 +1,22 @@
+services:
+    db:
+        image: postgres
+        restart: always
+        user: postgres
+        secrets:
+            - db_password
+        environment:
+            - POSTGRES_DB=covoiturage
+            - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+        expose:
+            - 5432
+        healthcheck:
+            test: ["CMD", "pg_isready"]
+            interval: 5s
+            timeout: 5s
+            retries: 5
+volumes:
+    db_data:
+secrets:
+    db_password:
+        file: .bdd/db_password.txt
