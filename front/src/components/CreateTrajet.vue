@@ -25,7 +25,7 @@
                     </div>
                     <div class="create-trajet-form-prix">
                         <label for="prix">Prix</label>
-                        <input type="text" name="prix" id="prix">
+                        <input type="number" name="prix" id="prix">
                     </div>
                     <div class="create-trajet-form-places">
                         <label for="places">Nombre de places</label>

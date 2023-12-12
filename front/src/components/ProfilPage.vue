@@ -2,8 +2,17 @@
 
     <div class="profil-fenetre">
         <div class="profil-presentation">
+            <div class="settings" v-if="name==user_name">
+                <a href="/profil_settings"><img class="img-settings" src="settings.png" alt=""></a>
+            </div>
             <img class="profil-pic" src="profil.png" alt="" >
-            <h2 class="name">{{ name }}</h2>
+            <div class="profil-name">
+                <h2 class="name">{{ name }}</h2>
+
+                <div v-if="name==user_name">
+                    <a class="logout" href="/"><img class="img-logout" src="deco.png" alt=""></a>
+                </div>
+            </div>
             <div class="note">
                 <img v-if="note === 1" class="star" src="stars/1.png" alt="">
                 <img v-else-if="note === 2" class="star" src="stars/2.png" alt="">
@@ -39,6 +48,7 @@ export default {
     },
     data() {
         return {
+            user_name: 'Yanis',
             name: 'Yanis',
             note: 3,
             trajets: [
@@ -118,9 +128,65 @@ export default {
         };
     },
 }
+
+
+
+
 </script>
 
 <style scoped>
+
+
+
+.profil-pic:hover{
+    settings{
+        display: block;
+    }
+}
+
+.settings{
+    position: absolute;
+    top: 100px;
+    left: 57%;
+    transform: translate(-50%);
+    display: none;
+}
+
+.img-settings{
+    width: 20px;
+    height: 20px;
+    opacity: 0.5;
+}
+
+.img-settings:hover{
+    opacity: 0.8;
+}
+
+.img-logout:hover{
+    opacity: 0.5;
+}
+
+.profil-name{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.logout{
+    margin-left: 20px;
+    height: 40px;
+}
+
+.logout img{
+    width: 35px;
+    height: 35px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin: auto;
+
+}
 
 .profil-presentation{
     margin: auto;

@@ -21,12 +21,7 @@
           <router-link  to="/profil"><img class="profil-img" src="profil.png" alt="" ></router-link>
         </div>
       </div>
-
-      
-
     </div>
-
-
   </div>
 </template>
 

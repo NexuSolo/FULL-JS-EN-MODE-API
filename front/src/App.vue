@@ -2,7 +2,7 @@
   <div id="app">
     <NavBar />
     <router-view />
-    <FooterBar />
+    <FooterBar v-if="$route.path !== '/connection' && $route.path !== '/create-trajet' && $route.path !== '/inscription'" />
   </div>
 
 </template>
