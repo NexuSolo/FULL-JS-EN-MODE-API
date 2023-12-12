@@ -34,7 +34,7 @@ export class CovoiturageService {
         }
     }
 
-    async abonnement(contrat: Covoiturage, auth: string){
+    async abonnement(contrat: Covoiturage, auth: string) {
         const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
         if(contrat.conducteur.id == id){
             this.covoiturageUtilisateurRepository.abonnement(id, contrat.id)

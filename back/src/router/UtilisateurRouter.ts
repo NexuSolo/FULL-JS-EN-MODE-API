@@ -1,6 +1,5 @@
 import { Router } from "express";
 import { UtilisateurController } from "../controller/UtilisateurController";
-import { parseArgs } from "util";
 
 export class UtilisateurRouter {
     router = Router();

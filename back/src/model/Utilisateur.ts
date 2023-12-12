@@ -1,4 +1,5 @@
 import { Covoiturage } from "./Covoiturage";
+import { Note } from "./Note";
 
 export class Utilisateur {
     constructor(
@@ -7,7 +8,7 @@ export class Utilisateur {
         public prenom: string,
         public email: string,
         public password: string,
-        public note: number[],
+        public note: Note[],
         public covoiturages: Covoiturage[],
         public covoituragesPassager: Covoiturage[],
         public photo: string
