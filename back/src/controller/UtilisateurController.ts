@@ -26,5 +26,8 @@ export class UtilisateurController {
     updatePhoto(auth: string, photo: string) {
         return this.utilisateurService.updatePhotoUtilisateur(auth, photo)
     }
+    getUtilisateurs() {
+        return this.utilisateurService.getAllUsers();
+    }
     
 }

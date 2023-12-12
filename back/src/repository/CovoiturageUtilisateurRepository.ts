@@ -41,4 +41,17 @@ export class CovoiturageUtilisateurRepository {
         return result.rows;
     }
 
+    async getAvailableSeats(id: number){
+        const insertQuery = {
+            text: 'SELECT nbPlace FROM covoiturage WHERE id = $1',
+            values: [id],
+        };
+        const takenSeats = {
+            text: 'SELECT COUNT(*) FROM covoiturage_utlisateur WHERE covoiturage_id = $1',
+            values: [id],
+        };
+        const result: QueryResult = await pool.query(insertQuery);
+        const result2: QueryResult = await pool.query(takenSeats);
+        return result.rows[0] - result2.rows[0];
+    }
 }
