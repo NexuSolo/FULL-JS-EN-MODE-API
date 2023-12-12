@@ -1,3 +1,4 @@
+import { Note } from "./Note";
 import { Utilisateur } from "./Utilisateur";
 import { Voiture } from "./Voiture";
 
@@ -13,7 +14,7 @@ export class Covoiturage {
         public conducteur: Utilisateur,
         public passagers: Utilisateur[],
         public voiture: Voiture,
-        public note: number,
+        public note: Note[],
         public etat: number //1: pas commencé, 2: en cours, 3: terminé
     ) {}
 }

@@ -20,7 +20,7 @@ export class CovoiturageRouter {
                 }
                 const result = this.covoiturageController.addCovoiturage(authorization, covoiturage);
                 if(await result !== null) {
-                    res.json(await result);
+                    res.json({success: "Success"});
                 }
                 else {
                     res.json({error: "Error"});
@@ -68,7 +68,7 @@ export class CovoiturageRouter {
                 const id = parseInt(req.params.id);
                 const result = this.covoiturageController.deleteCovoiturage(authorization, id);
                 if(await result !== null) {
-                    res.json(await result);
+                    res.json({success: "Success"});
                 }
                 else {
                     res.json({error: "Error"});
@@ -87,7 +87,7 @@ export class CovoiturageRouter {
                 const id = parseInt(req.params.id);
                 const result = this.covoiturageController.abonnement(authorization, id);
                 if(await result !== null) {
-                    res.json(await result);
+                    res.json({success: "Success"});
                 }
                 else {
                     res.json({error: "Error"});

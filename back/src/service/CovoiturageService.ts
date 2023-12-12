@@ -14,16 +14,46 @@ export class CovoiturageService {
 
     async createCovoiturage(authorization: string, contrat: Covoiturage) {
         const idUser = await this.jwtTokenService.getUtilisateurIdFromToken(authorization);
-        const covoiturage = this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive, contrat.dateDepart, contrat.dateArrivee, contrat.prix, 0, contrat.voiture.marque, contrat.voiture.modele, contrat.voiture.nombreDePlace, contrat.voiture.description, contrat.voiture.photo);
+        const idCovoiturage = await this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive, contrat.dateDepart, contrat.dateArrivee, contrat.prix, 0, idUser, contrat.voiture.marque, contrat.voiture.modele, contrat.voiture.nombreDePlace, contrat.voiture.description, contrat.voiture.photo);
+        if(idCovoiturage){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
-    async deleteConvoiturage(contrat: Covoiturage, authorization: string) {
-        if(contrat.conducteur.id == await this.jwtTokenService.getUtilisateurIdFromToken(authorization)){
-            this.covoiturageRepository.deleteCovoiturage(contrat.id);
+    async getCovoiturage(id : number) {
+        const covoiturage = await this.covoiturageRepository.getCovoiturage(id);
+        if(covoiturage.length == 0) {
+            return null;
+        }
+        return covoiturage[0];
+    }
+
+    async deleteConvoiturage(authorization: string, id: number) {
+        const idUser = await this.jwtTokenService.getUtilisateurIdFromToken(authorization);
+        const covoiturage = await this.covoiturageRepository.getCovoiturage(id);
+        if(covoiturage.length == 0) {
+            return null;
+        }
+        if(covoiturage[0].conducteur_id == idUser){
+            this.covoiturageRepository.deleteCovoiturage(id);
         }else{
             return null;
         }
     }
+
+    async getAllCovoiturages() {
+        const covoiturages = await this.covoiturageRepository.getAllCovoiturages();
+        if(covoiturages.length == 0) {
+            return null;
+        }
+        return covoiturages;
+    }
+
+
+
 
     async desabonnement(contrat: Covoiturage, auth: string) {
         const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
@@ -34,13 +64,9 @@ export class CovoiturageService {
         }
     }
 
-    async abonnement(contrat: Covoiturage, auth: string) {
+    async abonnement(auth: string ,contrat: number) {
         const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
-        if(contrat.conducteur.id == id){
-            this.covoiturageUtilisateurRepository.abonnement(id, contrat.id)
-        }else{
-            return null;
-        }
+        this.covoiturageUtilisateurRepository.abonnement(id, contrat)
     }
 
     async noteCovoiturage(contrat: Covoiturage, auth: string, note: number){

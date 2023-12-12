@@ -63,7 +63,6 @@ export class UtilisateurService {
 
     async updateEmailUtilisateur(auth: string, email: string) {
         const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth)
-        console.log(id)
         if((await this.utilisateurRepository.getUser(id)).length == 0) {
             return false;
         }

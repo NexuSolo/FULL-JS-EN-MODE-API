@@ -9,11 +9,11 @@ export class CovoiturageController {
     }
 
     async getCovoiturage(id: number) {
-        // return this.covoiturageService.getCovoiturage(id);
+        return this.covoiturageService.getCovoiturage(id);
     }
 
     async deleteCovoiturage(authorization: string, id: number) {
-        // return this.covoiturageService.deleteConvoiturage(authorization, id);
+        return this.covoiturageService.deleteConvoiturage(authorization, id);
     }
 
     async desabonnement(authorization: string, id: number) {
@@ -21,7 +21,7 @@ export class CovoiturageController {
     }
 
     async abonnement(authorization: string, id: number){
-        // return this.covoiturageService.abonnement(authorization, id);
+        return this.covoiturageService.abonnement(authorization, id);
     }
 
     async noteCovoiturage(authorization: string, id: number, note: number){
@@ -29,7 +29,7 @@ export class CovoiturageController {
     }
 
     async getAllCovoiturages() {
-        // return this.covoiturageService.getAllCovoiturages();
+        return this.covoiturageService.getAllCovoiturages();
     }
 
 }

@@ -1,4 +1,7 @@
 import { Pool, QueryResult } from 'pg';
+
+require('dotenv').config();
+
 let pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -14,13 +17,19 @@ export class CovoiturageRepository {
     }
 
     async postCovoiturage(depart: string, arrive: string, datedepart: Date, datearrivee: Date, 
-        prix: number, distance: number ,marque: string, modele: string, 
-        nbPlace:number, description?:string, photo?:string) {
+        prix: number, distance: number ,conduteur: number ,marque: string, modele: string, 
+        nombredeplace: number, description?: string, photo?: string) {
         const insertQuery = {
-            text: 'INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance, etat, marque, modele, nbPlace, description, photo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)',
-            values: [depart, arrive, datedepart, datearrivee, prix, distance, 1, marque, modele, nbPlace, description, photo],
+            text: 'INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance, conducteur_id, etat, marque, modele, nombredeplace, description, photo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id',
+            values: [depart, arrive, datedepart, datearrivee, prix, distance, 1, conduteur, marque, modele, nombredeplace, description, photo],
         };
-        return await pool.query(insertQuery).then((res) => console.log(res.rows[0]));
+        const result = await pool.query(insertQuery);
+        return result.rows[0];
+    }
+
+    async getAllCovoiturages(): Promise<any[]> {
+        const result: QueryResult = await pool.query('SELECT * FROM covoiturage');
+        return result.rows;
     }
 
     async deleteCovoiturage(id: number) {

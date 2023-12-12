@@ -1,0 +1,16 @@
+CREATE TABLE Covoiturage (
+    id SERIAL PRIMARY KEY,
+    localisationDepart VARCHAR(255) NOT NULL,
+    localisationArrive VARCHAR(255) NOT NULL,
+    dateDepart TIMESTAMP NOT NULL,
+    dateArrivee TIMESTAMP NOT NULL,
+    prix DECIMAL NOT NULL,
+    distance DECIMAL NOT NULL,
+    conducteur_id INT REFERENCES Utilisateur(id) ON DELETE CASCADE NOT NULL,
+    etat INT NOT NULL,
+    marque VARCHAR(255) NOT NULL,
+    modele VARCHAR(255) NOT NULL,
+    nombreDePlace INT NOT NULL,
+    description TEXT,
+    photo VARCHAR(255),
+);

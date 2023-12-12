@@ -1,4 +1,7 @@
 import { Pool, QueryResult } from 'pg';
+
+require('dotenv').config();
+
 let pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
@@ -15,7 +18,7 @@ export class CovoiturageUtilisateurRepository {
     
     async abonnement(auth_id: number, id: number){
         const insertQuery = {
-            text: 'INSERT INTO covoiturage_utilisateur (covoiturage_id, utilisateur_id) VALUES ($1, $2)',
+            text: 'INSERT INTO covoiturage_utilisateurs (covoiturage_id, utilisateur_id) VALUES ($1, $2)',
             values: [id, auth_id],
         };
         await pool.query(insertQuery);
