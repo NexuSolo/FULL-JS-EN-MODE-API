@@ -9,30 +9,30 @@
                 <form action="">
                     <div class="create-trajet-form-depart">
                         <label for="depart">Départ</label>
-                        <input type="text" name="depart" id="depart">
+                        <input type="text" name="depart" id="depart" v-model="depart">
                     </div>
                     <div class="create-trajet-form-arrivee">
                         <label for="arrivee">Arrivée</label>
-                        <input type="text" name="arrivee" id="arrivee">
+                        <input type="text" name="arrivee" id="arrivee" v-model="arrivee">
                     </div>
                     <div class="create-trajet-form-date">
                         <label for="date">Date</label>
-                        <input type="date" name="date" id="date">
+                        <input type="date" name="date" id="date" v-model="date">
                     </div>
                     <div class="create-trajet-form-heure">
                         <label for="heure">Heure</label>
-                        <input type="time" name="heure" id="heure">
+                        <input type="time" name="heure" id="heure" v-model="heure">
                     </div>
                     <div class="create-trajet-form-prix">
                         <label for="prix">Prix</label>
-                        <input type="number" name="prix" id="prix">
+                        <input type="number" name="prix" id="prix" v-model="prix">
                     </div>
                     <div class="create-trajet-form-places">
                         <label for="places">Nombre de places</label>
-                        <input type="text" name="places" id="places">
+                        <input type="text" name="places" id="places" v-model="places">
                     </div>
                     <div class="create-trajet-form-submit">
-                        <input type="submit" value="Créer">
+                        <input type="submit" value="Créer" @click.prevent="submitForm">
                     </div>
                 </form>
             </div>
@@ -43,11 +43,32 @@
 </template>
 
 <script>
+import { createTrajet } from '../service/CovoiturageService.ts';
 export default {
     name: 'CreateTrajet',
     props: {
         msg: String
     },
+    methods: {
+        async submitForm() {
+            try {
+                const localisationDepart = this.depart;
+                const localisationArrive = this.arrivee;
+                const dateDepart = this.date+" "+this.heure;
+                const dateArrivee = this.date+" "+this.heure;
+                const distance = this.prix;
+                const prix = this.prix;
+                const nombreDePlace = this.places;
+                const marque = 'Peugeot';
+                const modele = 'modele';
+                const description = 'description';
+                const photo = 'photo';
+                await createTrajet(localisationDepart, localisationArrive, dateDepart, dateArrivee, distance, prix, nombreDePlace, marque, modele, description, photo);            
+            } catch (error) {
+                console.error('Creation failed:', error);
+            }
+        }
+    }
 }
 </script>
 

@@ -5,11 +5,11 @@
             <div class="container-inscription">
                 <h1>Inscription</h1>
                 <form class="form">
-                    <input type="text" placeholder="Nom" id="nom" name="nom">
-                    <input type="text" placeholder="Prénom" id="prenom" name="prenom">
-                    <input type="text" placeholder="Email" id="email" name="email">
-                    <input type="password" placeholder="Mot de passe" id="mdp" name="mdp">
-                    <button type="submit" id="login-button">S'inscrire</button>
+                    <input type="text" placeholder="Nom" id="nom" name="nom" v-model="nom">
+                    <input type="text" placeholder="Prénom" id="prenom" name="prenom" v-model="prenom">
+                    <input type="text" placeholder="Email" id="email" name="email" v-model="email">
+                    <input type="password" placeholder="Mot de passe" id="mdp" name="mdp" v-model="mdp">
+                    <button type="submit" id="login-button" @click.prevent="submitForm">S'inscrire</button>
                 </form>
                 <router-link class="bouton-inscription" to="/connection">Se connecter</router-link>
             </div>
@@ -19,12 +19,34 @@
 </template>
 
 <script>
-
+import { register } from '../service/UtilisateurService.ts';
 export default {
     name: 'FormulaireConnection',
     props: {
         msg: String
-    }
+    },
+    data() {
+        return {
+            nom: '',
+            prenom: '',
+            email: '',
+            mdp: '',
+        };
+    },
+    methods: {
+        async submitForm() {
+            try {
+                const nom = this.nom;
+                const prenom = this.prenom;
+                const email = this.email;
+                const mdp = this.mdp;
+                const token = await register(nom, prenom, email, mdp);
+                localStorage.setItem('token', token);
+            } catch (error) {
+                console.error('Register failed:', error);
+            }
+        },
+    },
 }
 
 

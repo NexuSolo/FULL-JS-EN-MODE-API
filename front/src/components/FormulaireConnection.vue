@@ -1,3 +1,4 @@
+
 <template>
 
     <div class="connection-fenetre">
@@ -5,9 +6,9 @@
             <div class="container">
                 <h1>Connection</h1>
                 <form class="form">
-                    <input type="text" placeholder="Email" id="email" name="email">
-                    <input type="password" placeholder="Mot de passe" id="mdp" name="mdp">
-                    <button type="submit" id="login-button">Se connecter</button>
+                    <input type="text" placeholder="Email" id="email" name="email" v-model="email">
+                    <input type="password" placeholder="Mot de passe" id="mdp" name="mdp" v-model="mdp">
+                    <button type="submit" id="login-button" @click.prevent="submitForm">Se connecter</button>
                 </form>
                 <router-link class="bouton-inscription" to="/inscription">S'inscrire</router-link>
             </div>
@@ -17,13 +18,32 @@
 </template>
 
 <script>
-
+import { login } from '../service/UtilisateurService.ts';
 export default {
     name: 'FormulaireConnection',
     props: {
         msg: String
-    }
+    },
+    data() {
+        return {
+            email: '',
+            mdp: '',
+        };
+    },
+    methods: {
+        async submitForm() {
+            try {
+                const email = this.email;
+                const mdp = this.mdp;
+                const token = await login(email, mdp);            
+                localStorage.setItem('token', token);
+            } catch (error) {
+                console.error('Login failed:', error);
+            }
+        },
+    },
 }
+
 
 
 </script>
@@ -167,4 +187,4 @@ form button:hover {
 }
 
 
-</style>
+</style>../service/UtilisateurService.js

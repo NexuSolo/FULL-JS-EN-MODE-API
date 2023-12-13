@@ -12,13 +12,13 @@ export class CovoiturageRouter {
 
         this.router.post('/', async (req, res, next) => {
             try {
-                const authorization = req.headers.authorization;
-                const { covoiturage } = req.body;
+                const authorization = await req.headers.authorization;
+                const { covoiturage } = await req.body;
 
                 if(!authorization || !covoiturage) {
                     throw new Error("Missing arguments");
                 }
-                const result = this.covoiturageController.addCovoiturage(authorization, covoiturage);
+                const result = await this.covoiturageController.addCovoiturage(authorization, covoiturage);
                 if(await result !== null) {
                     res.json({success: "Success"});
                 }

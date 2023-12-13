@@ -10,7 +10,7 @@
                 <h2 class="name">{{ name }}</h2>
 
                 <div v-if="name==user_name">
-                    <a class="logout" href="/"><img class="img-logout" src="deco.png" alt=""></a>
+                    <a class="logout" href="/" @click.prevent="disconnect"><img class="img-logout" src="deco.png" alt=""></a>
                 </div>
             </div>
             <div class="note">
@@ -126,6 +126,12 @@ export default {
                 }
             ],
         };
+    },
+    methods: {
+        disconnect() {
+            localStorage.removeItem('token');
+            console.log("Déconnecté");
+        },
     },
 }
 
