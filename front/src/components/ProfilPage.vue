@@ -140,6 +140,7 @@ export default {
         disconnect() {
             localStorage.removeItem('token');
             console.log("Déconnecté");
+            this.$router.push('/');
         },
     },
 }
