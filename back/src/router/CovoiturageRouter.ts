@@ -124,9 +124,6 @@ export class CovoiturageRouter {
                 if(await result !== null) {
                     res.json(await result);
                 }
-                else {
-                    res.json({error: "Error"});
-                }
             }
             catch (error: unknown) {
                 next(error);

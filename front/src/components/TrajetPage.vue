@@ -82,6 +82,7 @@
 <script>
 import { getInfoCovoiturage } from '../service/CovoiturageService.ts';
 import { getUser } from '../service/UtilisateurService.ts';
+import { getPassengers } from '../service/CovoiturageService.ts';
 export default {
     name: "TrajetPage",
     props: {
@@ -94,23 +95,7 @@ export default {
             conducteur : {},
 
             // liste de passagers
-            passagers : [
-                {
-                    prenom: "Nicolas",
-                    nom: "Theau",
-                    note: "5"
-                },
-                {
-                    prenom: "Sebastien",
-                    nom: "Zhou",
-                    note: "5"
-                },
-                {
-                    prenom: "Tom",
-                    nom: "Rene",
-                    note: "5"
-                }
-            ]
+            passagers : []
             
         };
     },
@@ -136,7 +121,7 @@ export default {
         };
 
         // Assuming you have another API endpoint to fetch the passengers
-        // this.passagers = await this.getPassagers();
+        this.passagers = await getPassengers(data.id);
     },
 
 }
