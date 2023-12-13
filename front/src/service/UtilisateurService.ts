@@ -45,3 +45,25 @@ export async function register(nom, prenom, email, password) {
 
     return data.token;
 }
+
+export async function getUser(id){
+    const response = await fetch('http://localhost:8080/api/utilisateur/'+id, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+    });
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log(data);
+
+    if (data.error) {
+        throw new Error(data.error);
+    }
+
+    return data;
+}

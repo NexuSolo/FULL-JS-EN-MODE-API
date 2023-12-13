@@ -13,7 +13,7 @@ const routes = [
     { path: '/connection', component: FormulaireConnection },
     { path: '/inscription', component: FormulaireInscription },
     { path: '/profil', component: ProfilPage },
-    { path: '/trajet', component: TrajetPage },
+    { path: '/trajet/:id', component: TrajetPage },
     { path: '/create-trajet', component: CreateTrajet },
     { path: '/profil_settings', component: ModifProfil }
 ]

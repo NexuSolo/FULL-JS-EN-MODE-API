@@ -32,4 +32,8 @@ export class CovoiturageController {
         return this.covoiturageService.getAllCovoiturages();
     }
 
+    async getPassengers(id: number){
+        return this.covoiturageService.getPassengers(id);
+    }
+
 }

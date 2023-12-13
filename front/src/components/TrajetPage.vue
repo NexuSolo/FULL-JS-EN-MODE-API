@@ -5,7 +5,7 @@
                 {{ trajet.depart }}
             </div>
             <div class="to">
-                <img class="fleche" src="fleche.png">
+                <img class="fleche" src="../../public/fleche.png">
             </div>
             <div class="trajet-arrivee">  
                 {{ trajet.arrivee }}
@@ -31,7 +31,7 @@
                 </div>
             </div>
             <div class="conducteur-voiture">
-                <img src="logo.png" alt="Avatar" >
+                <img src="../../public/logo.png" alt="Avatar" >
             </div>
         </div>
 
@@ -80,6 +80,8 @@
 </template>
 
 <script>
+import { getInfoCovoiturage } from '../service/CovoiturageService.ts';
+import { getUser } from '../service/UtilisateurService.ts';
 export default {
     name: "TrajetPage",
     props: {
@@ -88,21 +90,8 @@ export default {
     data() {
         return {
 
-            trajet : {
-                depart: "Paris",
-                arrivee: "Marseille",
-                distance: "800km",
-                duree: "8h",
-                prix: "50€",
-                etat: "disponible"
-            },
-
-            conducteur : {
-                prenom: "Yanis",
-                nom: "Rozier",
-                voiture: "Peugeot 307",
-                note: "5"
-            },
+            trajet : {},
+            conducteur : {},
 
             // liste de passagers
             passagers : [
@@ -125,6 +114,31 @@ export default {
             
         };
     },
+    async created() {
+        const data = await getInfoCovoiturage(this.$route.params.id);
+        
+        this.trajet = {
+            depart: data.localisationdepart,
+            arrivee: data.localisationarrive,
+            distance: data.distance + 'km',
+            duree: '1h00',
+            prix: data.prix + '€',
+            etat: data.etat === 1 ? 'disponible' : 'indisponible',
+        };
+
+        const conducteur = await getUser(data.conducteur_id);
+
+        this.conducteur = {
+            prenom: conducteur.prenom,
+            nom: conducteur.nom,
+            note: "5",
+            voiture: data.marque + ' ' + data.modele,
+        };
+
+        // Assuming you have another API endpoint to fetch the passengers
+        // this.passagers = await this.getPassagers();
+    },
+
 }
 </script>
 

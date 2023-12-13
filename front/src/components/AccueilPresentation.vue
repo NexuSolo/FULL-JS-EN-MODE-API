@@ -51,13 +51,13 @@
                 <h3>Prix</h3>
             </div>
             <div v-for="(trajet, index) in trajets" :key="index">
-                <router-link class="plus" to="/trajet">
+                <router-link class="plus" :to="`/trajet/${trajet.id}`">
                     <div class="trajet">
-                        <div class="date">{{ trajet.date }}</div>
-                        <div class="depart">{{ trajet.depart }}</div>
-                        <div class="arrivee">{{ trajet.arrivee }}</div>
-                        <div class="distance">{{ trajet.places }}</div>
-                        <div class="prix">{{ trajet.prix }}</div>
+                        <div class="date">{{ formatDate(trajet.datedepart) }}</div>
+                        <div class="depart">{{ trajet.localisationdepart }}</div>
+                        <div class="arrivee">{{ trajet.localisationarrive }}</div>
+                        <div class="distance">{{ trajet.nombredeplace }}</div>
+                        <div class="prix">{{ trajet.prix }}€</div>
                     </div>
                 </router-link>
             </div>
@@ -67,6 +67,7 @@
 </template>
 
 <script>
+import { getCovoiturage } from '../service/CovoiturageService.ts';
 export default {
     name: 'AccueilPresentation',
     props: {
@@ -75,75 +76,19 @@ export default {
     
     data() {
         return {
-            trajets: [
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                },
-                {
-                    depart: "Paris",
-                    arrivee: "Lyon",
-                    date: "12/12/2020",
-                    prix: "20€",
-                    places: "2",
-                    etat: "disponible"
-                }
-            ]
-
+            trajets: []
         }
     },
+    async mounted() {
+        this.trajets = await getCovoiturage();
+        console.log(this.trajets);
+    },
+    methods: {
+            formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return new Date(dateString).toLocaleDateString(undefined, options);
+        },
+    }
 
 }
 

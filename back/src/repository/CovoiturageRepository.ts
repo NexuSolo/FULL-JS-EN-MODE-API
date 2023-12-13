@@ -50,4 +50,9 @@ export class CovoiturageRepository {
         const result: QueryResult = await pool.query('SELECT * FROM covoiturage WHERE etat = 1');
         return result.rows;
     }
+
+    async getPassengers(id: number){
+        const result: QueryResult = await pool.query('SELECT u.id, u.nom, u.prenom, u.email, u.photo FROM Utilisateur u INNER JOIN Covoiturage_Utilisateurs cu ON u.id = cu.utilisateur_id WHERE cu.covoiturage_id = $1', [id]);
+        return result.rows;
+    }
 }

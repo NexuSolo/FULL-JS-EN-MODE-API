@@ -25,7 +25,7 @@
         <div class="historique-trajets">
             <h2>Historique de trajets</h2>
             <div v-for="(trajet, index) in trajets" :key="index">
-                <router-link class="plus" to="/trajet">
+                <router-link class="plus" :to="`/trajet/${trajet.id}`">
                     <div class="trajet">
                         <div class="date">{{ trajet.date }}</div>
                         <div class="depart">{{ trajet.depart }}</div>
@@ -58,7 +58,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -66,7 +67,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -74,7 +76,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -82,7 +85,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -90,7 +94,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -98,7 +103,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -106,7 +112,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -114,7 +121,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 },
                 {
                     date: "01/01/2021",
@@ -122,7 +130,8 @@ export default {
                     arrivee: "Marseille",
                     distance: "800km",
                     duree: "8h",
-                    prix: "50€"
+                    prix: "50€",
+                    id: 1
                 }
             ],
         };

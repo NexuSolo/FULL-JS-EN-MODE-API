@@ -79,4 +79,12 @@ export class CovoiturageService {
             return null;
         }
     }
+
+    async getPassengers(id: number){
+        const passengers = await this.covoiturageRepository.getPassengers(id);
+        if(passengers.length == 0) {
+            return null;
+        }
+        return passengers;
+    }
 }
