@@ -2,7 +2,8 @@ import { CovoiturageService } from '../service/CovoiturageService';
 import { UtilisateurService } from '../service/UtilisateurService';
 import { ExpressRouter } from './express-router';
 import { ExpressServer } from './express-server';
-import * as dotenv from 'dotenv';
+import fs from 'fs';
+
 
 export class ExpressApplication {
     private expressRouter!: ExpressRouter;
@@ -20,17 +21,10 @@ export class ExpressApplication {
     }
 
     private configureApplication(): void {
-        this.configureEnvironment();
         this.configureServerPort();
         this.configureServices();
         this.configureExpressRouter();
         this.configureServer();
-    }
-
-    private configureEnvironment(): void {
-        dotenv.config({
-            path: '.env',
-        });
     }
 
     private configureServerPort(): void {

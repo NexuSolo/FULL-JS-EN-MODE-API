@@ -27,8 +27,23 @@ services:
       - 8080:8080
     depends_on:
       - postgres
+    secrets:
+      - db-password
     environment:
-      - DATABASE_URL=postgresql://postgres:root@db:5432/covoiturage
+      - PORT=8080
+      - DB_USER=postgres
+      - DB_HOST=postgres
+      - DB_DATABASE=covoiturage
+      - DB_PASSWORD=root
+      - DB_PORT=5432
+  front:
+    build: ./front
+    ports:
+      - 3000:3000
+    depends_on:
+      - back
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080
 volumes:
   db-data:
 secrets:

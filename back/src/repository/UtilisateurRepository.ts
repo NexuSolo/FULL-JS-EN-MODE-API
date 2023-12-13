@@ -1,8 +1,6 @@
 import { Pool, QueryResult } from 'pg';
 import { Utilisateur } from '../model/Utilisateur';
 
-require('dotenv').config();
-
 let pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
