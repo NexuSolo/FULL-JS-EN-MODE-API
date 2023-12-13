@@ -19,7 +19,7 @@ export class CovoiturageRouter {
                     throw new Error("Missing arguments");
                 }
                 const result = await this.covoiturageController.addCovoiturage(authorization, covoiturage);
-                if(await result !== null) {
+                if(result !== false) {
                     res.json({success: "Success"});
                 }
                 else {

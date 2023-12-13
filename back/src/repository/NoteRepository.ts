@@ -9,15 +9,18 @@ let pool = new Pool({
 });
 
 export class NoteRepository {
+
     async noteCovoiturage(id: number, note: number) {
+        console.log("INSERT INTO NoteUtilisateur (valeur, utilisateur_id) VALUES (" + note + ", " + id + ")");
         const insertQuery = {
             text: 'INSERT INTO covoiturage (valeur, utilisateur_id) VALUES ($1, $2)',
             values: [note, id],
         };
-        await pool.query(insertQuery);
+        return (await pool.query(insertQuery)).rows[0];
     }
 
     async checkAlreadyRated(id: number, id_covoiturage: number){
+        console.log("SELECT * FROM NoteUtilisateur WHERE rater = " + id + " AND covoiturage_id = " + id_covoiturage);
         const insertQuery = {
             text: 'SELECT * FROM NoteUtilisateur WHERE rater = $1 AND covoiturage_id = $2',
             values: [id, id_covoiturage],
@@ -27,6 +30,7 @@ export class NoteRepository {
     }
 
     async getAllNotes(id: number){
+        console.log("SELECT NoteUtilisateur.valeur FROM NoteUtilisateur JOIN Covoiturage ON NoteUtilisateur.covoiturage_id = Covoiturage.id JOIN Utilisateur ON NoteUtilisateur.id_rater = Utilisateur.id WHERE Utilisateur.id = " + id);
         const insertQuery = {
             text: 'SELECT NoteUtilisateur.valeur FROM NoteUtilisateur JOIN Covoiturage ON NoteUtilisateur.covoiturage_id = Covoiturage.id JOIN Utilisateur ON NoteUtilisateur.id_rater = Utilisateur.id WHERE Utilisateur.id = $1',
             values: [id],

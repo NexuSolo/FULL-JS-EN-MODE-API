@@ -13,25 +13,21 @@ export class UtilisateurService {
 
     async addUtilisateur(nom: string, prenom: string, email: string, password: string) {
         const passwordHash = this.passWordHashService.cryptPassword(password);
-        if((await this.utilisateurRepository.getUtilisateurByEmail(email)).length !== 0) {
+        if(await this.utilisateurRepository.getUtilisateurByEmail(email)) {
             return null;
         }
         this.utilisateurRepository.register(nom, prenom, await passwordHash, email);
-        const u: Utilisateur[] = await this.utilisateurRepository.getUtilisateurByEmail(email);
-        const utilisateur = u[0];
-        const utilisateurReduit: UtilisateurReduit = await new UtilisateurReduit(utilisateur.id, utilisateur.nom, utilisateur.prenom, utilisateur.email, utilisateur.note, utilisateur.covoiturages, utilisateur.covoituragesPassager, utilisateur.photo)
+        const utilisateur: Utilisateur = await this.utilisateurRepository.getUtilisateurByEmail(email);
+        const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateur.id, utilisateur.nom, utilisateur.prenom, utilisateur.email, utilisateur.note, utilisateur.covoiturages, utilisateur.covoituragesPassager, utilisateur.photo)
         const token = this.jwtTokenService.generateToken(utilisateurReduit);
         return token;
     }
 
     async connectUtilisateur(email: string, password: string) {
-        const utilisateurs: Utilisateur[] = await this.utilisateurRepository.getUtilisateurByEmail(email);
-        if (utilisateurs.length == 0) {
-            return null;
-        }
+        const utilisateurs: Utilisateur = await this.utilisateurRepository.getUtilisateurByEmail(email);
         try {
-            if(await this.passWordHashService.comparePasswords(password, utilisateurs[0].password)) {
-                const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateurs[0].id, utilisateurs[0].nom, utilisateurs[0].prenom, utilisateurs[0].email, utilisateurs[0].note, utilisateurs[0].covoiturages, utilisateurs[0].covoituragesPassager, utilisateurs[0].photo);
+            if(await this.passWordHashService.comparePasswords(password, utilisateurs.password)) {
+                const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateurs.id, utilisateurs.nom, utilisateurs.prenom, utilisateurs.email, utilisateurs.note, utilisateurs.covoiturages, utilisateurs.covoituragesPassager, utilisateurs.photo);
                 const mdp = this.jwtTokenService.generateToken(utilisateurReduit);
                 return mdp;
             }

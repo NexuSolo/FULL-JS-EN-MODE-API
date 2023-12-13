@@ -73,36 +73,40 @@ export class UtilisateurRouter {
                 if(!authorization) {
                     throw new Error("Missing arguments");
                 }
+                
+                const message = [];
 
                 if(email) {
                     if(await this.utilisateurController.updateEmail(authorization, email)) {
-                        res.json({message: "Email updated"});
+                        message.push("Email updated");
                     }
                     else {
-                        res.json({error: "Email already used"});
+                        message.push("Email not updated");
                     }
                 }
 
                 if(password) {
                     if(await this.utilisateurController.updatePassword(authorization, password)) {
-                        res.json({message: "Password updated"});
+                        message.push("Password updated");
                     }
                     else {
-                        res.json({error: "Password not updated"});
+                        message.push("Password not updated");
                     }
                 }
 
                 if(photo) {
                     if(await this.utilisateurController.updatePhoto(authorization, photo)) {
-                        res.json({message: "Photo updated"});
+                        message.push("Photo updated");
                     }
                     else {
-                        res.json({error: "Photo not updated"});
+                        message.push("Photo not updated");
                     }
                 }
 
-                res.json({error: "Missing arguments"});
-
+                if(message.length === 0) {
+                    res.json({error: "Missing arguments"});
+                }
+                res.json({message: message});
             }
             catch (error: unknown) {
                 next(error);

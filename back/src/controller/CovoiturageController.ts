@@ -16,10 +16,6 @@ export class CovoiturageController {
         return this.covoiturageService.deleteConvoiturage(authorization, id);
     }
 
-    async desabonnement(authorization: string, id: number) {
-        // return this.covoiturageService.desabonnement(authorization, id);
-    }
-
     async abonnement(authorization: string, id: number){
         return this.covoiturageService.abonnement(authorization, id);
     }

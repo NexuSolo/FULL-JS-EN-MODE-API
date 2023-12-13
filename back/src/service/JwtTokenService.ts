@@ -37,9 +37,7 @@ export class JwtTokenService {
 
     async getUtilisateurIdFromToken(token: string): Promise<number> {
         try {
-            console.log(token.split(' ')[1])
             const decodedToken = jwt.verify(token.split(' ')[1], this.secretKey) as JwtPayload;
-            console.log(decodedToken);
             if (!decodedToken) {
                 throw new Error("Invalid token");
             }
