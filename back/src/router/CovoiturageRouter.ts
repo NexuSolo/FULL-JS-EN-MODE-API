@@ -117,6 +117,21 @@ export class CovoiturageRouter {
                 next(error);
             }
         });
+        this.router.get('/passengers/:id', async (req, res, next) => {
+            try {
+                const id = parseInt(req.params.id);
+                const result = this.covoiturageController.getPassengers(id);
+                if(await result !== null) {
+                    res.json(await result);
+                }
+                else {
+                    res.json({error: "Error"});
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
     }
 
 }

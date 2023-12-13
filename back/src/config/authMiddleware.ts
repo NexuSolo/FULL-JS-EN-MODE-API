@@ -14,8 +14,13 @@ export const authMiddleware: express.RequestHandler = (req, res, next) => {
         return res.status(401).send({ error: 'No token provided' });
     }
 
-    if (!authHeader) {
-        return res.status(401).send({ error: 'Token malformatted' });
+    if(req.method === 'GET') {
+        switch(req.path) {
+            case '/covoiturage/all': return next()
+            case '/covoiturage/': return next()
+            case '/utilisateur/': return next()
+            default: break;
+        }
     }
     
     if (!jwtTokenService.verifyToken(authHeader.split(' ')[1])) {

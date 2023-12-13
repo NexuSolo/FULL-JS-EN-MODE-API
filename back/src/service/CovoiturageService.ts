@@ -15,7 +15,7 @@ export class CovoiturageService {
     async createCovoiturage(authorization: string, contrat: Covoiturage) {
         const idUser = await this.jwtTokenService.getUtilisateurIdFromToken(authorization);
         const idCovoiturage = await this.covoiturageRepository.postCovoiturage(contrat.localisationDepart, contrat.localisationArrive, contrat.dateDepart, contrat.dateArrivee, contrat.prix, 0, idUser, contrat.voiture.marque, contrat.voiture.modele, contrat.voiture.nombreDePlace, contrat.voiture.description, contrat.voiture.photo);
-        if(idCovoiturage){
+        if(idCovoiturage) {
             return true;
         }
         else {
@@ -51,8 +51,6 @@ export class CovoiturageService {
         }
         return covoiturages;
     }
-
-
 
 
     async desabonnement(contrat: Covoiturage, auth: string) {

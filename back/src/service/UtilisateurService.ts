@@ -88,8 +88,4 @@ export class UtilisateurService {
         return sum/notes_list.length;
     }
 
-    async getAllUsers() {
-        return await this.utilisateurRepository.getUsers();
-    }
-
 }

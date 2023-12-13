@@ -10,10 +10,6 @@ let pool = new Pool({
 });
 
 export class UtilisateurRepository {
-    async getUsers(): Promise<any[]> {
-        const result: QueryResult = await pool.query('SELECT * FROM utilisateur');
-        return result.rows;
-    }
 
     async getUser(id: number): Promise<any[]> {
         const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE id = ' + id);

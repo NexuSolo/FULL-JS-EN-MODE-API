@@ -11,6 +11,14 @@ Notre projet est un site de covoiturage.
 Le projet se lance via [docker](https://www.docker.com/products/docker-desktop/) il est donc necessaire d'avoir docker d'installé et de lancé.
 
 Pour éviter tout conflit avec postgres il est necessaire de quitter toute instance de postgres
+
+## Features
+
+- Light/dark mode toggle
+- Live previews
+- Fullscreen mode
+- Cross platform
+
 ## Installation
 
 Installation du projet avec docker

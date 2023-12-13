@@ -33,8 +33,8 @@ export class ExpressRouter {
 
     private configureRoutes(): void {
         this.router.use(authMiddleware);
-        this.router.use('/covoiturages', this.CovoiturageRouter.router);
         this.router.use('/covoiturage', this.CovoiturageRouter.router);
         this.router.use('/utilisateur', this.UtilisateurRouter.router);
     }
+    
 }
