@@ -131,6 +131,9 @@ export class CovoiturageService {
     async abonnement(auth: string ,contrat: number) {
         const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
         const covoiturages = await this.covoiturageUtilisateurRepository.checkPassengerCourse(contrat, id);
+        if(await this.covoiturageUtilisateurRepository.getAvailableSeats(contrat) == 0) {
+            return null;
+        }
         if(covoiturages.length != 0) {
             return null;
         }

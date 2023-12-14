@@ -65,7 +65,7 @@ export class CovoiturageUtilisateurRepository {
         };
         const result: QueryResult = await pool.query(insertQuery);
         const result2: QueryResult = await pool.query(takenSeats);
-        return result.rows[0] - result2.rows[0] + 1;
+        return result.rows[0].nombredeplace - result2.rows[0].count + 1;
     }
     
 }
