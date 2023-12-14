@@ -27,16 +27,16 @@ export class CovoiturageUtilisateurRepository {
     async desabonnement(auth_id: number, id: number){
         console.log("DELETE FROM covoiturage_utilisateurs WHERE covoiturage_id = " + id + " AND utilisateur_id = " + auth_id);
         const insertQuery = {
-            text: 'DELETE FROM covoiturage_utilisateurs WHERE utilisateur_id = $1',
-            values: [auth_id]
+            text: 'DELETE FROM covoiturage_utilisateurs WHERE utilisateur_id = $1 AND covoiturage_id = $2',
+            values: [auth_id, id]
         };
         await pool.query(insertQuery);
     }
 
     async checkPassengerCourse(covoiturage_id: number, utilisateur_id: number){
-        console.log("SELECT * FROM covoiturage_utilisateurs WHERE utilisateur_id = " + utilisateur_id + " AND covoiturage_id = " + covoiturage_id);
+        console.log("SELECT * FROM covoiturage_utilisateurs WHERE covoiturage_id = " + covoiturage_id + " AND utilisateur_id = " + utilisateur_id);
         const insertQuery = {
-            text: 'SELECT * FROM covoiturage_utilisateurs WHERE utilisateur_id = $1 AND covoiturage_id = $2',
+            text: 'SELECT * FROM covoiturage_utilisateurs WHERE covoiturage_id = $1 AND utilisateur_id = $2',
             values: [covoiturage_id, utilisateur_id]
         };
         const result: QueryResult = await pool.query(insertQuery);

@@ -53,6 +53,37 @@ export class CovoiturageService {
         }
         const place_libre = await this.covoiturageUtilisateurRepository.getAvailableSeats(id);
         covoiturage.place_libre = place_libre;
+        const conduteur = await this.utilisateurService.getUtilisateur(covoiturage.conducteur_id);
+        if(!conduteur) {
+            return null;
+        }
+        const conducteur: any = {
+            id: conduteur.id,
+            nom: conduteur.nom,
+            prenom: conduteur.prenom,
+            note: conduteur.note,
+            photo: conduteur.photo
+        }
+        covoiturage.conducteur = conducteur;
+        const passagers = await this.covoiturageUtilisateurRepository.getPassengers(id);
+        const p = [];
+        var index = 0;
+        for(let i = 0; i < passagers.length; i++) {
+            if(conducteur.id == passagers[i].utilisateur_id) {
+                continue;
+            }
+            const passager = await this.utilisateurService.getUtilisateur(passagers[i].utilisateur_id);
+            if(!passager) {
+                return null;
+            }
+            p[index++] = {
+                id: passager.id,
+                nom: passager.nom,
+                prenom: passager.prenom,
+                photo: passager.photo
+            }
+        }
+        covoiturage.passagers = p;
         return covoiturage;
     }
 
@@ -64,14 +95,16 @@ export class CovoiturageService {
         }
         //cas ou on est un passager
         if(covoiturage.conducteur_id != idUser) {
-            this.desabonnement(covoiturage, authorization);
+            this.desabonnement(covoiturage.id, authorization);
         }
-        //cas ou on est le proprio
-        const passagers = await this.covoiturageUtilisateurRepository.getPassengers(idUser);
-        for(let i = 0; i < passagers.length; i++) {
-            this.covoiturageUtilisateurRepository.desabonnement(passagers[i].utilisateur_id, id);
+        else {
+            //cas ou on est le proprio
+            const passagers = await this.covoiturageUtilisateurRepository.getPassengers(id);
+            for(let i = 0; i < passagers.length; i++) {
+                this.covoiturageUtilisateurRepository.desabonnement(passagers[i].utilisateur_id, id);
+            }
+            this.covoiturageRepository.deleteCovoiturage(id);
         }
-        this.covoiturageRepository.deleteCovoiturage(id);
     }
 
     async getAllCovoiturages() {
@@ -86,15 +119,21 @@ export class CovoiturageService {
         return covoiturages;
     }
 
-
     async desabonnement(covoiturage_id: number, utilisateur_auth : string) {
         const utilisateur_id = await this.jwtTokenService.getUtilisateurIdFromToken(utilisateur_auth);
         const passagers = await this.covoiturageUtilisateurRepository.checkPassengerCourse(covoiturage_id, utilisateur_id);
+        if(passagers.length == 0) {
+            return null;
+        }
         this.covoiturageUtilisateurRepository.desabonnement(utilisateur_id, covoiturage_id);
     }
 
     async abonnement(auth: string ,contrat: number) {
         const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
+        const covoiturages = await this.covoiturageUtilisateurRepository.checkPassengerCourse(contrat, id);
+        if(covoiturages.length != 0) {
+            return null;
+        }
         this.covoiturageUtilisateurRepository.abonnement(id, contrat)
     }
 
