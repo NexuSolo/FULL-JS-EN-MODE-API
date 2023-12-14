@@ -47,9 +47,10 @@ export class CovoiturageRepository {
             values: [id],
         };
         const res = await pool.query(insertQuery);
-        if(res.rows.length === 0){
+        if(res.rows.length === 0) {
             return false;
-        }else{
+        }
+        else {
             return true;
         }
     }
@@ -60,7 +61,7 @@ export class CovoiturageRepository {
         return result.rows;
     }
 
-    async getPassengers(id: number){
+    async getPassengers(id: number) {
         console.log("SELECT u.id, u.nom, u.prenom, u.email, u.photo FROM Utilisateur u INNER JOIN Covoiturage_Utilisateurs cu ON u.id = cu.utilisateur_id WHERE cu.covoiturage_id = " + id);
         const result: QueryResult = await pool.query('SELECT u.id, u.nom, u.prenom, u.email, u.photo FROM Utilisateur u INNER JOIN Covoiturage_Utilisateurs cu ON u.id = cu.utilisateur_id WHERE cu.covoiturage_id = $1', [id]);
         return result.rows;
