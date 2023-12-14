@@ -11,6 +11,15 @@ let pool = new Pool({
 export class UtilisateurRepository {
 
     async getUser(id: number) {
+        console.log("SELECT id, nom, prenom, email, photo FROM utilisateur WHERE id = " + id);
+        const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE id = ' + id);
+        if(result.rows.length === 0) {
+            return null;
+        }
+        return result.rows[0];
+    }
+
+    async getUserwithPassword(id: number) {
         console.log("SELECT * FROM utilisateur WHERE id = " + id);
         const result: QueryResult = await pool.query('SELECT * FROM utilisateur WHERE id = ' + id);
         if(result.rows.length === 0){

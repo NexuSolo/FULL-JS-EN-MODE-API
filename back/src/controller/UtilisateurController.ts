@@ -11,6 +11,10 @@ export class UtilisateurController {
         return this.utilisateurService.connectUtilisateur(email, password)
     }
 
+    verify(auth: string) {
+        return this.utilisateurService.verify(auth)
+    }
+
     getUtilisateur(id: number) {
         return this.utilisateurService.getUtilisateur(id)
     }

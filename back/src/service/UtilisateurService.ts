@@ -40,20 +40,25 @@ export class UtilisateurService {
         }
     }
 
+    async verify(auth: string) {
+        return this.jwtTokenService.verifyToken(auth);
+    }
+
     async getUtilisateur(id: number) {
         const users = await this.utilisateurRepository.getUser(id);
-        if(users.length == 0) {
+        if(!users) {
             return null;
         }
-        return new UtilisateurReduit(users[0].id, users[0].nom, users[0].prenom, users[0].email, users[0].note, users[0].covoiturages, users[0].covoituragesPassager, users[0].photo);
+        return new UtilisateurReduit(users.id, users.nom, users.prenom, users.email, users.note, users.covoiturages, users.covoituragesPassager, users.photo);
     }
 
     async updatePasswordUtilisateur(auth: string, password: string) {
-        if((await this.utilisateurRepository.getUser(await this.jwtTokenService.getUtilisateurIdFromToken(auth))).length === 0) {
+        const user = await this.utilisateurRepository.getUserwithPassword(await this.jwtTokenService.getUtilisateurIdFromToken(auth))
+        if(!user) {
             return false;
         }
         const passwordHash = this.passWordHashService.cryptPassword(password);
-        this.utilisateurRepository.updatePasswordUtilisateur(await this.jwtTokenService.getUtilisateurIdFromToken(auth),await passwordHash);
+        this.utilisateurRepository.updatePasswordUtilisateur(user.id, await passwordHash);
         return true;
     }
 

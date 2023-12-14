@@ -112,6 +112,24 @@ export class UtilisateurRouter {
                 next(error);
             }
         });
+        this.router.get('/verify', async (req, res, next) => {
+            try {
+                const authorization = req.headers.authorization;
+                if(!authorization) {
+                    throw new Error("Missing arguments");
+                }
+                const result = this.utilisateurController.verify(authorization);
+                if(await result) {
+                    res.json({token: await result});
+                }
+                else {
+                    res.json({error: "Token invalid"});
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
     }
 
 }
