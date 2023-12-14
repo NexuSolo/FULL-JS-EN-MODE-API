@@ -35,7 +35,7 @@ export default {
       msg: String
   },
   async mounted() {
-      const connected = verifyToken();
+      const connected = await verifyToken();
       console.log(connected);
       if (connected) {
           // replace '/verify-token' with your actual endpoint
