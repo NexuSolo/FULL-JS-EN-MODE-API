@@ -49,6 +49,16 @@ export default {
     props: {
         msg: String
     },
+    data() {
+        return {
+            depart: '',
+            arrivee: '',
+            date: '',
+            heure: '',
+            prix: '',
+            places: ''
+        }
+    },
     methods: {
         async submitForm() {
             try {
@@ -63,7 +73,10 @@ export default {
                 const modele = 'modele';
                 const description = 'description';
                 const photo = 'photo';
-                await createTrajet(localisationDepart, localisationArrive, dateDepart, dateArrivee, distance, prix, nombreDePlace, marque, modele, description, photo);            
+                await createTrajet(localisationDepart, localisationArrive, dateDepart, dateArrivee, distance, prix, nombreDePlace, marque, modele, description, photo);
+                if (!localStorage.getItem('token')) {
+                    this.$router.push('/connection');
+                }         
             } catch (error) {
                 console.error('Creation failed:', error);
             }

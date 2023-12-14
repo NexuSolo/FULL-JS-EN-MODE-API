@@ -67,3 +67,19 @@ export async function getUser(id){
 
     return data;
 }
+
+export async function verifyToken(){
+    try {
+        if(localStorage.getItem('token') === null) return false;
+        const response = await fetch('http://localhost:8080/api/utilisateur/verify', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            },
+        });
+        return true;
+    } catch (error) {
+        return false;
+    }
+}

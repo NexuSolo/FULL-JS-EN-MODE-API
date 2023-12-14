@@ -119,6 +119,7 @@ export class UtilisateurRouter {
                     throw new Error("Missing arguments");
                 }
                 const result = this.utilisateurController.verify(authorization);
+                console.log('result='+await result);
                 if(await result) {
                     res.json({token: await result});
                 }

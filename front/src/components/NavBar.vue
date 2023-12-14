@@ -28,29 +28,28 @@
 
 
 <script scoped>
-import { getCurrentInstance } from 'vue'
-
+import { verifyToken } from '../service/UtilisateurService.ts';
 export default {
-    name: "NavBar",
-    props: {
-        msg: String
-    },
-    mounted() {
-        const user = getCurrentInstance().appContext.config.globalProperties.user;
-        console.log(localStorage.getItem('token'));
-        console.log("User : " + user); // Affiche 'none' dans la console
-        if (user != "") {
-            // rendre no-user visible
+  name: "NavBar",
+  props: {
+      msg: String
+  },
+  async mounted() {
+      const connected = verifyToken();
+      console.log(connected);
+      if (connected) {
+          // replace '/verify-token' with your actual endpoint
+              // the token is valid
+              document.querySelector(".no-user").style.display = "none";
+              document.querySelector(".user").style.display = "block";
+        } else {
+            // there is no token
             document.querySelector(".no-user").style.display = "block";
             document.querySelector(".user").style.display = "none";
         }
-        else{
-            // rendre user visible
-            document.querySelector(".no-user").style.display = "none";
-            document.querySelector(".user").style.display = "block";
-        }
     }
 }
+  
 
 
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar />
-    <router-view />
+    <router-view :key="$route.fullPath" />
     <FooterBar v-if="$route.path !== '/connection' && $route.path !== '/create-trajet' && $route.path !== '/inscription'" />
   </div>
 
