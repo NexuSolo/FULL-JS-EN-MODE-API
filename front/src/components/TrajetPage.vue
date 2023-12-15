@@ -71,8 +71,10 @@
             </div>
 
             <div class="infos-right">
-                <a v-if="trajet.etat === 'disponible'" class="check-trajet" href="">Choisir ce trajet</a>
-                <p v-else-if="trajet.etat === 'termine'" class="termine-trajet" href="">Trajet terminé</p>
+                <a v-if="trajet.etat == 'disponible' && trajet.conducteur_id != userId && !isPassenger && userId != null" class="check-trajet" href="" @click.prevent="abonnement">Choisir ce trajet</a>
+                <a v-else-if="trajet.etat == 'disponible' && isPassenger" class="check-trajet" href="" @click.prevent="desabonnement">Quitter le trajet</a>
+                <a v-else-if="trajet.etat == 'disponible' && trajet.conducteur_id == userId" class="check-trajet" href="" @click.prevent="desabonnement">Supprimer le trajet</a>
+                <p v-else-if="trajet.etat == 'termine'" class="termine-trajet" href="">Trajet terminé</p>
             </div>
         </div>
 
@@ -81,8 +83,8 @@
 
 <script>
 import { getInfoCovoiturage } from '../service/CovoiturageService.ts';
-import { getUser } from '../service/UtilisateurService.ts';
-import { getPassengers } from '../service/CovoiturageService.ts';
+import { abonnement } from '../service/CovoiturageService.ts';
+import { desabonnement } from '../service/CovoiturageService.ts';
 export default {
     name: "TrajetPage",
     props: {
@@ -95,12 +97,21 @@ export default {
             conducteur : {},
 
             // liste de passagers
-            passagers : []
-            
+            passagers : [],
+            isPassenger : false,
+            userId : localStorage.getItem('userId'),
         };
     },
     async created() {
         const data = await getInfoCovoiturage(this.$route.params.id);
+        let state = '';
+        if (data.etat == 1){
+            state = 'disponible';
+        } else if (data.etat == 2){
+            state = 'en cours';
+        } else {
+            state = 'termine';
+        }
         
         this.trajet = {
             depart: data.localisationdepart,
@@ -108,22 +119,34 @@ export default {
             distance: data.distance + 'km',
             duree: '1h00',
             prix: data.prix + '€',
-            etat: data.etat === 1 ? 'disponible' : 'indisponible',
+            etat: state,
+            conducteur_id: data.conducteur_id
         };
 
-        const conducteur = await getUser(data.conducteur_id);
 
         this.conducteur = {
-            prenom: conducteur.prenom,
-            nom: conducteur.nom,
+            prenom: data.conducteur.prenom,
+            nom: data.conducteur.nom,
             note: "5",
             voiture: data.marque + ' ' + data.modele,
         };
-
-        // Assuming you have another API endpoint to fetch the passengers
-        this.passagers = await getPassengers(data.id);
+        
+        this.passagers = data.passagers;
+        for(let i = 0; i < this.passagers.length; i++){
+            if(this.passagers[i].id == this.userId){
+                this.isPassenger = true;
+            }
+        }
     },
+    methods: {
+        async abonnement(){
+            await abonnement(this.$route.params.id);
+        },
 
+        async desabonnement(){
+            await desabonnement(this.$route.params.id);
+        } 
+    }
 }
 </script>
 

@@ -12,7 +12,6 @@ export async function getCovoiturage(){
     }
 
     const data = await response.json();
-    console.log(data);
 
     if (data.error) {
         throw new Error(data.error);
@@ -62,9 +61,30 @@ export async function createTrajet(localisationDepart, localisationArrive, dateD
 }
 
 export async function getInfoCovoiturage(id){
-    console.log(id);
     const response = await fetch('http://localhost:8080/api/covoiturage/'+id, {
         method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.error) {
+        throw new Error(data.error);
+    }
+
+    return data;
+}
+
+export async function abonnement(id){
+    const response = await fetch('http://localhost:8080/api/covoiturage/'+id, {
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -85,9 +105,9 @@ export async function getInfoCovoiturage(id){
     return data;
 }
 
-export async function getPassengers(id){
-    const response = await fetch('http://localhost:8080/api/covoiturage/passengers/'+id, {
-        method: 'GET',
+export async function desabonnement(id){
+    const response = await fetch('http://localhost:8080/api/covoiturage/'+id, {
+        method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token'),

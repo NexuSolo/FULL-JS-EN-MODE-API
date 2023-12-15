@@ -4,7 +4,7 @@
     <div class="Navbar-content">
 
       <div class="logo">
-        <img class="logo-img" src="logo.png" alt="">
+        <img class="logo-img" src="../../public/logo.png" alt="">
       </div>
 
       <nav>
@@ -18,7 +18,7 @@
           <router-link class="bouton-connection" to="/connection">Se connecter</router-link>
         </div>
         <div class="user">
-          <router-link  to="/profil"><img class="profil-img" src="profil.png" alt="" ></router-link>
+          <router-link  to="/profil"><img class="profil-img" src="../../public/profil.png" alt="" ></router-link>
         </div>
       </div>
     </div>
@@ -36,7 +36,6 @@ export default {
   },
   async mounted() {
       const connected = await verifyToken();
-      console.log(connected);
       if (connected) {
           // replace '/verify-token' with your actual endpoint
               // the token is valid

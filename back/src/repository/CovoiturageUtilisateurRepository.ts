@@ -57,7 +57,7 @@ export class CovoiturageUtilisateurRepository {
         console.log("SELECT nombredeplace FROM covoiturage WHERE id = " + id);
         const insertQuery = {
             text: 'SELECT nombredeplace FROM covoiturage WHERE id = $1',
-            values: [id]
+            values: [id] 
         };
         const takenSeats = {
             text: 'SELECT COUNT(*) FROM covoiturage_utilisateurs WHERE covoiturage_id = $1',
@@ -65,7 +65,7 @@ export class CovoiturageUtilisateurRepository {
         };
         const result: QueryResult = await pool.query(insertQuery);
         const result2: QueryResult = await pool.query(takenSeats);
-        return result.rows[0].nombredeplace - result2.rows[0].count + 1;
+        return result.rows[0].nombredeplace - result2.rows[0].count;
     }
     
 }

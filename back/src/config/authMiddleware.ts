@@ -21,6 +21,9 @@ export const authMiddleware: express.RequestHandler = (req, res, next) => {
             case '/utilisateur/': return next()
             default: break;
         }
+        if(req.path.startsWith('/covoiturage/')) {
+            return next();
+        }
     }
     
     if (!jwtTokenService.verifyToken(authHeader.split(' ')[1])) {

@@ -16,11 +16,12 @@ export async function login(email, password) {
     const data = await response.json();
     console.log(data);
 
+
     if (data.error) {
         throw new Error(data.error);
     }
 
-    return data.token;
+    return data;
 }
 
 export async function register(nom, prenom, email, password) {
@@ -37,13 +38,12 @@ export async function register(nom, prenom, email, password) {
     }
 
     const data = await response.json();
-    console.log(data);
 
     if (data.error) {
         throw new Error(data.error);
     }
 
-    return data.token;
+    return data;
 }
 
 export async function getUser(id){

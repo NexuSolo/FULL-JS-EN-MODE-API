@@ -29,7 +29,7 @@
                     </div>
                     <div class="create-trajet-form-places">
                         <label for="places">Nombre de places</label>
-                        <input type="text" name="places" id="places" v-model="places">
+                        <input type="number" name="places" id="places" v-model="places">
                     </div>
                     <div class="create-trajet-form-submit">
                         <input type="submit" value="Créer" @click.prevent="submitForm">
