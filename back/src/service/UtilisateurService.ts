@@ -29,7 +29,7 @@ export class UtilisateurService {
             if(await this.passWordHashService.comparePasswords(password, utilisateurs.password)) {
                 const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateurs.id, utilisateurs.nom, utilisateurs.prenom, utilisateurs.email, utilisateurs.note, utilisateurs.covoiturages, utilisateurs.covoituragesPassager, utilisateurs.photo);
                 const token = this.jwtTokenService.generateToken(utilisateurReduit);
-                const mdp = {token: token, id: utilisateurs.id};
+                return {token: token, id: utilisateurs.id};
             }
             else {
                 return null;

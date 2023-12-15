@@ -17,7 +17,7 @@ export class UtilisateurRouter {
                 }
                 const result = this.utilisateurController.register(nom, prenom, email, password);
                 if(await result !== null) {
-                    res.json({token: await result});
+                    res.json(await result);
                 }
                 else {
                     res.json({error: "Email already used"});
@@ -36,7 +36,7 @@ export class UtilisateurRouter {
                 }
                 const result = this.utilisateurController.login(email, password);
                 if(await result !== null) {
-                    res.json({token: await result});
+                    res.json(await result);
                 }
                 else {
                     res.json({error: "Email or password incorrect"});
