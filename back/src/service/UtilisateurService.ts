@@ -4,12 +4,14 @@ import { UtilisateurRepository } from "../repository/UtilisateurRepository";
 import { JwtTokenService } from "./JwtTokenService";
 import { PasswordCryptageService } from "./PasswordCryptageService";
 import { NoteRepository } from "../repository/NoteRepository";
+import { CovoiturageService } from "./CovoiturageService";
 
 export class UtilisateurService {
     private utilisateurRepository: UtilisateurRepository = new UtilisateurRepository();
     private jwtTokenService: JwtTokenService = JwtTokenService.getInstance();
     private passWordHashService: PasswordCryptageService = new PasswordCryptageService();
     private noteRepository: NoteRepository = new NoteRepository();
+    private covoiturageService: CovoiturageService = new CovoiturageService();
 
     async addUtilisateur(nom: string, prenom: string, email: string, password: string) {
         const passwordHash = this.passWordHashService.cryptPassword(password);
@@ -79,14 +81,16 @@ export class UtilisateurService {
         return true;
     }
 
-    async getAvgNoteUser(auth: string) {
-        const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
-        const notes_list = (await this.noteRepository.getAllNotes(id)).rows;
-        let sum = 0;
-        for(let i = 0; i < notes_list.length; i++) {
-            sum += notes_list[i].valeur;
+    async getNoteUtilisateur(id: number) {
+        const covoiturages_ids = await this.covoiturageService.getCovoiturageIdByConducteurId(id);
+        if(!covoiturages_ids) {
+            return null;
         }
-        return sum/notes_list.length;
+        const note = await this.noteRepository.getNoteUtilisateur(covoiturages_ids);
+        if(!note) {
+            return null;
+        }
+        return note;
     }
 
 }

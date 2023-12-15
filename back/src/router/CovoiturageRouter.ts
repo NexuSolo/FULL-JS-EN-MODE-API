@@ -44,6 +44,57 @@ export class CovoiturageRouter {
                 next(error);
             }
         });
+        this.router.post('/note/:id', async (req, res, next) => {
+            try {
+                const authorization = req.headers.authorization;
+                if(!authorization) {
+                    throw new Error("Missing arguments");
+                }
+                const id = parseInt(req.params.id);
+                const { note } = req.body;
+                const result = this.covoiturageController.noteCovoiturage(authorization, id, note);
+                if(await result !== null) {
+                    res.json(await result);
+                }
+                else {
+                    res.json({error: "Error"});
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
+        this.router.get('/note/:id', async (req, res, next) => {
+            try {
+                const authorization = req.headers.authorization;
+                if(!authorization) {
+                    throw new Error("Missing arguments");
+                }
+                const id = parseInt(req.params.id);
+                const result = this.covoiturageController.getNoteCovoiturage(authorization, id);
+                if(await result !== null) {
+                    res.json(await result);
+                }
+                else {
+                    res.json({error: "Error"});
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
+        this.router.get('/passengers/:id', async (req, res, next) => {
+            try {
+                const id = parseInt(req.params.id);
+                const result = this.covoiturageController.getPassengers(id);
+                if(await result !== null) {
+                    res.json(await result);
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
         this.router.get('/:id', async (req, res, next) => {
             try {
                 const id = parseInt(req.params.id);
@@ -91,38 +142,6 @@ export class CovoiturageRouter {
                 }
                 else {
                     res.json({error: "Error"});
-                }
-            }
-            catch (error: unknown) {
-                next(error);
-            }
-        });
-        this.router.post('/note/:id', async (req, res, next) => {
-            try {
-                const authorization = req.headers.authorization;
-                if(!authorization) {
-                    throw new Error("Missing arguments");
-                }
-                const id = parseInt(req.params.id);
-                const { note } = req.body;
-                const result = this.covoiturageController.noteCovoiturage(authorization, id, note);
-                if(await result !== null) {
-                    res.json(await result);
-                }
-                else {
-                    res.json({error: "Error"});
-                }
-            }
-            catch (error: unknown) {
-                next(error);
-            }
-        });
-        this.router.get('/passengers/:id', async (req, res, next) => {
-            try {
-                const id = parseInt(req.params.id);
-                const result = this.covoiturageController.getPassengers(id);
-                if(await result !== null) {
-                    res.json(await result);
                 }
             }
             catch (error: unknown) {

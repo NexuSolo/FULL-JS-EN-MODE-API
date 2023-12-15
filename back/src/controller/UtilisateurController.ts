@@ -30,5 +30,9 @@ export class UtilisateurController {
     updatePhoto(auth: string, photo: string) {
         return this.utilisateurService.updatePhotoUtilisateur(auth, photo)
     }
+
+    getNoteUtilisateur(id: number) {
+        return this.utilisateurService.getNoteUtilisateur(id)
+    }
     
 }

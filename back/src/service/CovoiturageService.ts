@@ -140,18 +140,6 @@ export class CovoiturageService {
         this.covoiturageUtilisateurRepository.abonnement(id, contrat)
     }
 
-    async noteCovoiturage(contrat: Covoiturage, auth: string, note: number){
-        const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
-        if(contrat.conducteur.id != id
-            && await this.covoiturageRepository.checkState(contrat.id) 
-            && await this.covoiturageUtilisateurRepository.checkPassengerCourse(id, contrat.id)) {
-            this.NoteRepository.noteCovoiturage(contrat.conducteur.id, note)
-        }
-        else {
-            return null;
-        }
-    }
-
     async getPassengers(id: number) {
         const passengers = await this.covoiturageRepository.getPassengers(id);
         if(passengers.length == 0) {
@@ -159,4 +147,38 @@ export class CovoiturageService {
         }
         return passengers;
     }
+
+    async noteCovoiturage(covoiturage_id: number, auth: string , note: number) {
+        if(note < 1 || note > 5) {
+            return null;
+        }
+        const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
+        const covoiturage = await this.covoiturageRepository.getCovoiturage(covoiturage_id);
+        if(covoiturage.conducteur_id != id
+            && await this.covoiturageRepository.checkState(covoiturage) 
+            && await this.covoiturageUtilisateurRepository.checkPassengerCourse(id, covoiturage_id)) {
+            this.NoteRepository.postNoteCovoiturage(covoiturage_id, id, note);
+        }
+        else {
+            return null;
+        }
+    }
+
+    async getNoteCovoiturage(covoiturage_id: number, auth: string) {
+        const id = await this.jwtTokenService.getUtilisateurIdFromToken(auth);
+        const note = await this.NoteRepository.getNoteCovoiturage(covoiturage_id, id);
+        if(!note) {
+            return null;
+        }
+        return note;
+    }
+
+    async getCovoiturageIdByConducteurId(id: number) {
+        const covoiturages = await this.covoiturageRepository.getConducteurCovoiturages(id);
+        if(covoiturages.length == 0) {
+            return null;
+        }
+        return covoiturages;
+    }
+
 }

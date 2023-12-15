@@ -21,7 +21,12 @@ export class CovoiturageController {
     }
 
     async noteCovoiturage(authorization: string, id: number, note: number){
-        // return this.covoiturageService.noteCovoiturage(authorization, id, note);
+        return this.covoiturageService.noteCovoiturage(id, authorization, note);
+    }
+
+    async getNoteCovoiturage(authorization: string, id: number) {
+        return this.covoiturageService.getNoteCovoiturage(id, authorization);
+    
     }
 
     async getAllCovoiturages() {

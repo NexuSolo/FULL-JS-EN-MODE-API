@@ -65,6 +65,21 @@ export class UtilisateurRouter {
                 next(error);
             }
         });
+        this.router.get('/note/:id', async (req, res, next) => {
+            try {
+                const id = parseInt(req.params.id);
+                const result = this.utilisateurController.getNoteUtilisateur(id);
+                if(await result !== null) {
+                    res.json(await result);
+                }
+                else {
+                    res.json({error: "User not found"});
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
         this.router.get('/:id', async (req, res, next) => {
             try {
                 const id = parseInt(req.params.id);

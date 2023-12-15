@@ -17,9 +17,11 @@ export const authMiddleware: express.RequestHandler = (req, res, next) => {
     if(req.method === 'GET') {
         switch(req.path) {
             case '/covoiturage/all': return next()
-            case '/covoiturage/': return next()
             case '/utilisateur/': return next()
             default: break;
+        }
+        if(req.path.startsWith('/covoiturage/')) {
+            return next();
         }
     }
     
