@@ -46,6 +46,25 @@ export class UtilisateurRouter {
                 next(error);
             }
         });
+        this.router.get('/verify', async (req, res, next) => {
+            try {
+                const authorization = req.headers.authorization;
+                if(!authorization) {
+                    throw new Error("Missing arguments");
+                }
+                const result = this.utilisateurController.verify(authorization);
+                console.log('result='+await result);
+                if(await result) {
+                    res.json({token: await result});
+                }
+                else {
+                    res.json({error: "Token invalid"});
+                }
+            }
+            catch (error: unknown) {
+                next(error);
+            }
+        });
         this.router.get('/:id', async (req, res, next) => {
             try {
                 const id = parseInt(req.params.id);
@@ -107,25 +126,6 @@ export class UtilisateurRouter {
                     res.json({error: "Missing arguments"});
                 }
                 res.json({message: message});
-            }
-            catch (error: unknown) {
-                next(error);
-            }
-        });
-        this.router.get('/verify', async (req, res, next) => {
-            try {
-                const authorization = req.headers.authorization;
-                if(!authorization) {
-                    throw new Error("Missing arguments");
-                }
-                const result = this.utilisateurController.verify(authorization);
-                console.log('result='+await result);
-                if(await result) {
-                    res.json({token: await result});
-                }
-                else {
-                    res.json({error: "Token invalid"});
-                }
             }
             catch (error: unknown) {
                 next(error);

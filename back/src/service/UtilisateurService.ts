@@ -20,7 +20,7 @@ export class UtilisateurService {
         const utilisateur: Utilisateur = await this.utilisateurRepository.getUtilisateurByEmail(email);
         const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateur.id, utilisateur.nom, utilisateur.prenom, utilisateur.email, utilisateur.note, utilisateur.covoiturages, utilisateur.covoituragesPassager, utilisateur.photo)
         const token = this.jwtTokenService.generateToken(utilisateurReduit);
-        return token;
+        return {token: token, id: utilisateur.id};
     }
 
     async connectUtilisateur(email: string, password: string) {
@@ -28,8 +28,8 @@ export class UtilisateurService {
         try {
             if(await this.passWordHashService.comparePasswords(password, utilisateurs.password)) {
                 const utilisateurReduit: UtilisateurReduit = new UtilisateurReduit(utilisateurs.id, utilisateurs.nom, utilisateurs.prenom, utilisateurs.email, utilisateurs.note, utilisateurs.covoiturages, utilisateurs.covoituragesPassager, utilisateurs.photo);
-                const mdp = this.jwtTokenService.generateToken(utilisateurReduit);
-                return mdp;
+                const token = this.jwtTokenService.generateToken(utilisateurReduit);
+                const mdp = {token: token, id: utilisateurs.id};
             }
             else {
                 return null;
@@ -41,7 +41,7 @@ export class UtilisateurService {
     }
 
     async verify(auth: string) {
-        return this.jwtTokenService.verifyToken(auth);
+        return this.jwtTokenService.verifyToken(auth.split(' ')[1]);
     }
 
     async getUtilisateur(id: number) {
