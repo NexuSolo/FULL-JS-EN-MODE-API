@@ -35,8 +35,9 @@ export default {
             try {
                 const email = this.email;
                 const mdp = this.mdp;
-                const token = await login(email, mdp);            
-                localStorage.setItem('token', token);
+                const res = await login(email, mdp);
+                localStorage.setItem('userId', res.id);        
+                localStorage.setItem('token', res.token);
                 this.$router.push('/');
             } catch (error) {
                 console.error('Login failed:', error);

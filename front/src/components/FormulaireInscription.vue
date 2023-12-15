@@ -40,8 +40,9 @@ export default {
                 const prenom = this.prenom;
                 const email = this.email;
                 const mdp = this.mdp;
-                const token = await register(nom, prenom, email, mdp);
-                localStorage.setItem('token', token);
+                const res = await register(nom, prenom, email, mdp);
+                localStorage.setItem('userId', res.id);
+                localStorage.setItem('token', res.token);
                 this.$router.push('/');
             } catch (error) {
                 console.error('Register failed:', error);

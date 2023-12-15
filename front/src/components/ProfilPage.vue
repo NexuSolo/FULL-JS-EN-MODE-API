@@ -2,14 +2,16 @@
 
     <div class="profil-fenetre">
         <div class="profil-presentation">
-            <div class="settings" v-if="name==user_name">
+            <!-- <div class="settings" v-if="name==user_name"> -->
+            <div class="settings">
                 <a href="/profil_settings"><img class="img-settings" src="settings.png" alt=""></a>
             </div>
             <img class="profil-pic" src="profil.png" alt="" >
             <div class="profil-name">
                 <h2 class="name">{{ name }}</h2>
 
-                <div v-if="name==user_name">
+                <!-- <div v-if="name==user_name"> -->
+                <div>
                     <a class="logout" href="/" @click.prevent="disconnect"><img class="img-logout" src="deco.png" alt=""></a>
                 </div>
             </div>
@@ -41,16 +43,21 @@
 </template>
   
 <script>
+import { getUser } from '../service/UtilisateurService.ts';
 export default {
     name: "ProfilPage",
     props: {
         msg: String
     },
+    async created() {
+        await this.getUser();
+    },
+
     data() {
         return {
-            user_name: 'Yanis',
-            name: 'Yanis',
-            note: 3,
+            user_name: '',
+            name: '',
+            note: 5,
             trajets: [
                 {
                     date: "01/01/2021",
@@ -139,9 +146,15 @@ export default {
     methods: {
         disconnect() {
             localStorage.removeItem('token');
+            localStorage.removeItem('userId');
             console.log("Déconnecté");
             this.$router.push('/');
         },
+
+        async getUser() {
+            const data = await getUser(localStorage.getItem('userId'));
+            this.name = data.prenom + ' ' + data.nom;
+        }
     },
 }
 

@@ -81,10 +81,9 @@ export default {
     },
     async mounted() {
         this.trajets = await getCovoiturage();
-        console.log(this.trajets);
     },
     methods: {
-            formatDate(dateString) {
+        formatDate(dateString) {
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             return new Date(dateString).toLocaleDateString(undefined, options);
         },
