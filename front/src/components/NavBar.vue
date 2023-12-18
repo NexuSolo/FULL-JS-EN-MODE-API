@@ -29,28 +29,46 @@
 
 <script scoped>
 import { verifyToken } from '../service/UtilisateurService.ts';
+
 export default {
   name: "NavBar",
   props: {
-      msg: String
+    msg: String
   },
-  async mounted() {
+  data() {
+    return {
+      user: null,
+    };
+  },
+  watch: {
+    async '$route'() {
+      // Code à exécuter à chaque changement de route
       const connected = await verifyToken();
       if (connected) {
-          // replace '/verify-token' with your actual endpoint
-              // the token is valid
-              document.querySelector(".no-user").style.display = "none";
-              document.querySelector(".user").style.display = "block";
-        } else {
-            // there is no token
-            document.querySelector(".no-user").style.display = "block";
-            document.querySelector(".user").style.display = "none";
-        }
+        // the token is valid
+        document.querySelector(".no-user").style.display = "none";
+        document.querySelector(".user").style.display = "block";
+      } else {
+        // there is no token
+        document.querySelector(".no-user").style.display = "block";
+        document.querySelector(".user").style.display = "none";
+      }
+    },
+  },
+  async mounted() {
+    // Initial verification when the component is mounted
+    const connected = await verifyToken();
+    if (connected) {
+      // the token is valid
+      document.querySelector(".no-user").style.display = "none";
+      document.querySelector(".user").style.display = "block";
+    } else {
+      // there is no token
+      document.querySelector(".no-user").style.display = "block";
+      document.querySelector(".user").style.display = "none";
     }
-}
-  
-
-
+  },
+};
 </script>
 
 <style>

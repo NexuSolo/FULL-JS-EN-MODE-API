@@ -1,10 +1,9 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import router from './router'
+// main.js
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+import store from './store'; // import the store
 
-
-const user = ''
-
-const app = createApp(App)
-app.config.globalProperties.user = user
-app.use(router).mount('#app')
+const app = createApp(App);
+app.use(store); // use the store
+app.use(router).mount('#app');

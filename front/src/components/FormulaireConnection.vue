@@ -31,20 +31,20 @@ export default {
         };
     },
     methods: {
-        async submitForm() {
-            try {
-                const email = this.email;
-                const mdp = this.mdp;
-                const res = await login(email, mdp);
-                localStorage.setItem('userId', res.id);        
-                localStorage.setItem('token', res.token);
-                this.$router.push('/');
-            } catch (error) {
-                console.error('Login failed:', error);
-            }
-
-        },
-    },
+  async submitForm() {
+    try {
+      const email = this.email;
+      const mdp = this.mdp;
+      const res = await login(email, mdp);
+      localStorage.setItem('userId', res.id);        
+      localStorage.setItem('token', res.token);
+      this.$store.commit('setUser', res); // use the store
+      this.$router.push('/');
+    } catch (error) {
+      console.error('Login failed:', error);
+    }
+  },
+},
 }
 
 
