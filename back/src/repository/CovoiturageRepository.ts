@@ -21,12 +21,12 @@ export class CovoiturageRepository {
     }
 
     async postCovoiturage(depart: string, arrive: string, datedepart: Date, datearrivee: Date, 
-        prix: number, distance: number ,conduteur: number ,marque: string, modele: string, 
+        prix: number, distance: number ,conducteur: number ,marque: string, modele: string, 
         nombredeplace: number, description?: string, photo?: string) {
-        console.log("INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance, conducteur_id, etat, marque, modele, nombredeplace, description, photo) VALUES (" + depart + ", " + arrive + ", " + datedepart + ", " + datearrivee + ", " + prix + ", " + distance + ", " + conduteur + ", 1, " + marque + ", " + modele + ", " + nombredeplace + ", " + description + ", " + photo + ")");
+        console.log("INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance, conducteur_id, etat, marque, modele, nombredeplace, description, photo) VALUES (" + depart + ", " + arrive + ", " + datedepart + ", " + datearrivee + ", " + prix + ", " + distance + ", " + conducteur + ", 1, " + marque + ", " + modele + ", " + nombredeplace + ", " + description + ", " + photo + ")");
         const insertQuery = {
             text: 'INSERT INTO covoiturage (localisationdepart, localisationarrive, datedepart, datearrivee, prix, distance, conducteur_id, etat, marque, modele, nombredeplace, description, photo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING id',
-            values: [depart, arrive, datedepart, datearrivee, prix, distance, 1, conduteur, marque, modele, nombredeplace, description, photo],
+            values: [depart, arrive, datedepart, datearrivee, prix, distance, conducteur, 1, marque, modele, nombredeplace, description, photo],
         };
         return (await pool.query(insertQuery)).rows[0];
     }

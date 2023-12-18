@@ -36,14 +36,14 @@ services:
       - DB_DATABASE=covoiturage
       - DB_PASSWORD=root
       - DB_PORT=5432
-  # front:
-  #   build: ./front
-  #   ports:
-  #     - 3000:3000
-  #   depends_on:
-  #     - back
-  #   environment:
-  #     - REACT_APP_API_URL=http://localhost:8080
+  front:
+    build: ./front
+    ports:
+      - 3000:3000
+    depends_on:
+      - back
+    environment:
+      - REACT_APP_API_URL=http://localhost:8080
 volumes:
   db-data:
 secrets:

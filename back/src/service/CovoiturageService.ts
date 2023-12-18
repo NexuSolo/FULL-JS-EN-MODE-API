@@ -110,6 +110,7 @@ export class CovoiturageService {
     async getAllCovoiturages() {
         const covoiturages = await this.covoiturageRepository.getAllCovoiturages();
         if(covoiturages.length == 0) {
+            console.log("covoiturages null");
             return null;
         }
         for(let i = 0; i < covoiturages.length; i++) {
