@@ -20,6 +20,32 @@
 
         </div>
 
+        
+        <div class="vos-trajets">
+            <h1>MES VOYAGES</h1>
+            <div class="liste-trajets">
+                <div class="titre-trajets">
+                    <h3>Date</h3>
+                    <h3>Départ</h3>
+                    <h3>Arrivée</h3>
+                    <h3>Places</h3>
+                    <h3>Prix</h3>
+                </div>
+                <div v-for="(trajet, index) in trajets" :key="index">
+                    <router-link class="plus" :to="`/trajet/${trajet.id}`">
+                        <div class="trajet">
+                            <div class="date">{{ formatDate(trajet.datedepart) }}</div>
+                            <div class="depart">{{ trajet.localisationdepart }}</div>
+                            <div class="arrivee">{{ trajet.localisationarrive }}</div>
+                            <div class="distance">{{ trajet.nombredeplace }}</div>
+                            <div class="prix">{{ trajet.prix }}€</div>
+                        </div>
+                    </router-link>
+                </div>
+            </div> 
+        </div>
+        
+
         <form class="search-bar"  action="POST">
             <div class="search-depart">
                 <input type="text" name="" id="" placeholder="Départ">
@@ -94,6 +120,23 @@ export default {
 </script>
 
 <style scoped>
+
+
+.vos-trajets{
+    width: 1000px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.vos-trajets h1{
+    font-weight: bold;
+    color: white;
+    background-color: rgb(102, 102, 204);
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+}
 
 form input {
   -webkit-appearance: none;
@@ -217,7 +260,7 @@ form input:focus {
 .line{
     width: 25%;
     height: 2px;
-    background-color: rgb(69, 69, 207);
+    background-color: rgb(102, 102, 204);
     margin-bottom: 20px;
 }
 
@@ -244,7 +287,7 @@ form input:focus {
 .blue-box{
     width: 400px;
     height: 600px;
-    background-color: rgb(69, 69, 207);
+    background-color: rgb(102, 102, 204);
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -260,7 +303,7 @@ form input:focus {
 .bouton-connection{
     display: inline-block;
     padding: 10px 20px;
-    background-color: rgb(69, 69, 207);
+    background-color: rgb(102, 102, 204);
     color: white;
     border-radius: 5px;
     text-decoration: none;
@@ -269,22 +312,23 @@ form input:focus {
 }
 
 .bouton-connection:hover{
-    background-color: rgb(49, 49, 157);
+    background-color: rgb(152, 152, 235);
 }
 
 .decouvrir-button{
     display: inline-block;
     padding: 10px 20px;
-    background-color: rgb(69, 69, 207);
+    background-color: rgb(102, 102, 204);
     color: white;
     border-radius: 5px;
     text-decoration: none;
     margin-top: 20px;
     margin-bottom: auto;
+    transition: 0.2s;
 }
 
 .decouvrir-button:hover{
-    background-color: rgb(49, 49, 157);
+    background-color: rgb(152, 152, 235);
 }
 
 </style>

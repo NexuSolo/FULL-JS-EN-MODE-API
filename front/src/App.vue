@@ -2,7 +2,7 @@
   <div id="app">
     <NavBar />
     <router-view :key="$route.fullPath" />
-    <FooterBar v-if="$route.path !== '/connection' && $route.path !== '/create-trajet' && $route.path !== '/inscription'" />
+    <FooterBar v-if="$route.path !== '/connection' && $route.path !== '/create-trajet' && $route.path !== '/inscription' && $route.path !== '/profil_settings'"  />
   </div>
 
 </template>
@@ -91,7 +91,7 @@ a {
 .bouton-connection{
     display: inline-block;
     padding: 10px 20px;
-    background-color: rgb(69, 69, 207);
+    background-color: rgb(102, 102, 204);
     color: white;
     border-radius: 5px;
     text-decoration: none;
@@ -100,7 +100,7 @@ a {
 }
 
 .bouton-connection:hover{
-    background-color: rgb(49, 49, 157);
+    background-color: rgb(152, 152, 235);
 }
 
 

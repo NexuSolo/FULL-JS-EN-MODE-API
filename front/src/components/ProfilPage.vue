@@ -2,7 +2,6 @@
 
     <div class="profil-fenetre">
         <div class="profil-presentation">
-            <!-- <div class="settings" v-if="name==user_name"> -->
             <div class="settings">
                 <a href="/profil_settings"><img class="img-settings" src="settings.png" alt=""></a>
             </div>
@@ -178,7 +177,6 @@ export default {
     top: 100px;
     left: 57%;
     transform: translate(-50%);
-    display: none;
 }
 
 .img-settings{
